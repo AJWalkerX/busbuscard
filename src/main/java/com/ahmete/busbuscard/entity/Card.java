@@ -19,10 +19,19 @@ public class Card extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
-	UUID uuid;
+	@Column(updatable = false, nullable = false, unique = true)
+	String uuid;
 	Long balance;
 	@Column(name="expiry_date")
 	LocalDate expiryDate;
 	@Enumerated(EnumType.STRING)
 	EType type;
+
+	@PrePersist
+	public void generateUUID() {
+		if (uuid == null) {
+			UUID uuidHash = UUID.randomUUID();
+			uuid = uuidHash.toString().replace("-", "").substring(0,16);
+		}
+	}
 }
