@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BusbuscardApplication {
 	
 	public static void main(String[] args) {
-//		SpringApplication.run(BusbuscardApplication.class, args);
-		System.out.println("Alex konsol çıktısı veriyor!");
+		SpringApplication.run(BusbuscardApplication.class, args);
+	
 	}
 	
 }
