@@ -14,15 +14,4 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
-	@GetMapping("/save-user-test")
-	public String saveUser(){
-		User user = User.builder().name("test name").build();
-		userService.save(user);
-		return "User saved!";
-	}
-
-	@GetMapping("/all-users")
-	public List<User> findAllUsers(){
-		return userService.findAll();
-	}
 }

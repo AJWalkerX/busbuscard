@@ -19,6 +19,8 @@ import java.time.LocalDate;
 public class BaseEntity {
 	@Builder.Default
 	EState state=EState.ACTIVE;
+	@Builder.Default
 	LocalDate createAt=LocalDate.now();
+	@Builder.Default
 	LocalDate updateAt=LocalDate.now();
 }

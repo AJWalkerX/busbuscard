@@ -19,7 +19,8 @@ public class Transaction extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	@Column(name = "trans_date")
-	LocalDate transDate;
+	@Builder.Default
+	LocalDate transDate = LocalDate.now();
 	@Column(name ="card_id")
 	Long cardId;
 	Long amount;
