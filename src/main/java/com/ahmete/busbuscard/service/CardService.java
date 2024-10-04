@@ -1,14 +1,25 @@
 package com.ahmete.busbuscard.service;
 
+import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.repository.CardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 @Service
+@RequiredArgsConstructor
 public class CardService {
 	
-	@Autowired
-	private CardRepository cardRepository;
+	private final CardRepository cardRepository;
 	
-	
+	public void save(Card card) {
+
+		cardRepository.save(card);
+	}
+
+	public Card findMyCard(Long cardId) {
+		return cardRepository.findById(cardId).orElse(null);
+	}
+
+
 }

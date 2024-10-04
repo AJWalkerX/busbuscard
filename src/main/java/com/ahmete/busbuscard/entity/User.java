@@ -18,6 +18,8 @@ public class User extends BaseEntity {
 	Long id;
 	String name;
 	String surname;
+	@Column(unique = true, nullable = false, length = 11, updatable = false)
+	String tc;
 	@Enumerated(EnumType.STRING)
 	EGender gender;
 	

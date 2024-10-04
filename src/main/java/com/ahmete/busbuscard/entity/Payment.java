@@ -22,7 +22,8 @@ public class Payment extends BaseEntity {
 	Long cardId;
 	Long amount;
 	@Column(name="payment_date")
-	LocalDate paymentDate;
+	@Builder.Default
+	LocalDate paymentDate = LocalDate.now();
 	@Enumerated(EnumType.STRING)
 	
 	ETransport transport;
