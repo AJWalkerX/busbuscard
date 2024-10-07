@@ -28,32 +28,32 @@ public class Runner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        userService.save(User.builder()
-                .name("Ahmet")
-                .surname("Kaya")
-                .gender(EGender.MALE)
-                .tc("11223322114")
-                .build());
-        cardService.save(Card.builder()
-                .balance(0L)
-                .type(EType.CIVIL)
-                .expiryDate(LocalDate.of(2025,10,19))
-                .build());
-        jgovService.save(Jgov.builder()
-                        .cardId(1L)
-                        .userId(1L)
-                        .address("ABC")
-                        .title(ETitle.SLAVE)
-               .build());
-        transactionService.addMoney(Transaction.builder()
-                        .cardId(1L)
-                        .amount(100L)
-                        .transactionType(ETransactionType.CASH)
-                .build());
-        paymentService.payTicket(Payment.builder()
-                        .cardId(1L)
-                        .amount(10L)
-                        .transport(ETransport.HIGHWAY)
-                .build());
+//        userService.save(User.builder()
+//                .name("Ahmet")
+//                .surname("Kaya")
+//                .gender(EGender.MALE)
+//                .tc("11223322114")
+//                .build());
+//        cardService.save(Card.builder()
+//                .balance(0L)
+//                .type(ECardType.EYT)
+//                .expiryDate(LocalDate.of(2025,10,19))
+//                .build());
+//        jgovService.save(Jgov.builder()
+//                        .cardId(1L)
+//                        .userId(1L)
+//                        .address("ABC")
+//                        .title(ETitle.CIVIL)
+//               .build());
+//        transactionService.addMoney(Transaction.builder()
+//                        .cardId(1L)
+//                        .amount(100L)
+//                        .transactionType(ETransactionType.CASH)
+//                .build());
+//        paymentService.payTicket(Payment.builder()
+//                        .cardId(1L)
+//                        .amount(10L)
+//                        .transport(ETransport.HIGHWAY)
+//                .build());
     }
 }

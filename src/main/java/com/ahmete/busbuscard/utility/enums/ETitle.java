@@ -1,5 +1,15 @@
 package com.ahmete.busbuscard.utility.enums;
 
 public enum ETitle {
-	STUDENT,SLAVE,DISABLED,MEDICINAL_SLAVE,SOLDIER,TEACHER,JOURNALIST,POLICE,NIGHT_EAGLES,EYT,VETERAN
+    STUDENT,
+    CIVIL,
+    DISABLED,
+    MEDICINAL,
+    SOLDIER,
+    TEACHER,
+    JOURNALIST,
+    POLICE,
+    GUARDS,
+    EYT,
+    VETERAN
 }

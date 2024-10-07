@@ -1,6 +1,6 @@
 package com.ahmete.busbuscard.entity;
 
-import com.ahmete.busbuscard.utility.enums.EType;
+import com.ahmete.busbuscard.utility.enums.ECardType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +25,7 @@ public class Card extends BaseEntity {
 	@Column(name="expiry_date")
 	LocalDate expiryDate;
 	@Enumerated(EnumType.STRING)
-	EType type;
+	ECardType type;
 
 	@PrePersist
 	public void generateUUID() {

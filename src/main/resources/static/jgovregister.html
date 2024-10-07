@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Form</title>
+</head>
+<body>
+<form action="/jgov/jgovregister" method="post">
+    <label for="tc">User TC:</label><br>
+    <input type="text" id="tc" name="tc"><br>
+    <label for="address">Address:</label><br>
+    <input type="text" id="address" name="address"><br>
+
+    <label for="titles">Choose your title:</label>
+    <select name="titles" id="titles">
+        <option value="">Select</option>
+        <option value="STUDENT">STUDENT</option>
+        <option value="CIVIL">CIVIL</option>
+        <option value="DISABLED">DISABLED</option>
+        <option value="MEDICINAL">MEDICINAL</option>
+        <option value="SOLDIER">SOLDIER</option>
+        <option value="TEACHER">TEACHER</option>
+        <option value="JOURNALIST">JOURNALIST</option>
+        <option value="POLICE">POLICE</option>
+        <option value="GUARDS">GUARDS</option>
+        <option value="EYT">EYT</option>
+        <option value="VETERAN">VETERAN</option>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

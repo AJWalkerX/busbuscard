@@ -22,5 +22,5 @@ public class Jgov extends BaseEntity {
 	Long cardId;
 	String address;
 	@Enumerated(EnumType.STRING)
-	ETitle title;
+	ETitle titles;
 }
