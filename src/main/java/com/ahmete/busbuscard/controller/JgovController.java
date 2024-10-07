@@ -21,7 +21,7 @@ public class JgovController {
 	 */
 
 	@PostMapping("/jgovregister")
-	public void jgovRegister(Long userTc, String address, ETitle title) {
-		jgovService.save(userTc,address,title);
+	public void jgovRegister(Long userTc, String address, ETitle titles) {
+		jgovService.save(userTc,address,titles);
 	}
 }
