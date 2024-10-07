@@ -13,8 +13,8 @@ public class JgovService {
 
 	private final JgovRepository jgovRepository;
 
-	public void save(Long userTc, String address, ETitle title) {
-		Jgov jgov = Jgov.builder().userId(userTc).address(address).titles(title).build();
+	public void save(Long userTc, String address, ETitle titles) {
+		Jgov jgov = Jgov.builder().userId(userTc).address(address).titles(titles).build();
 		jgovRepository.save(jgov);
 	}
 
