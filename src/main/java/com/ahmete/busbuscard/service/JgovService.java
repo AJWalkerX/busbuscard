@@ -2,6 +2,7 @@ package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.Jgov;
 import com.ahmete.busbuscard.repository.JgovRepository;
+import com.ahmete.busbuscard.utility.enums.ETitle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,9 @@ public class JgovService {
 
 	private final JgovRepository jgovRepository;
 
-	public void save(Jgov jgov) {
+	public void save(Long userTc, String address, ETitle title) {
+		Jgov jgov = Jgov.builder().userId(userTc).address(address).titles(title).build();
 		jgovRepository.save(jgov);
 	}
+
 }
