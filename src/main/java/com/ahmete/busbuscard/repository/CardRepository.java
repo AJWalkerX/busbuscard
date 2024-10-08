@@ -15,4 +15,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     Card findDistinctFirstByStateAndType(EState eState, ECardType eCardType);
 
     Optional<Card> findByUuid(String cardUuid);
+
+    boolean existsByUuid(String uuid);
 }

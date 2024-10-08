@@ -26,11 +26,11 @@ public class JgovService {
                 .build();
         user = userService.save(user);
         if (user.getId() == null){
-            return "<h1 text-color= \"red\">KULLANICI KAYDI HATASI!</h1>";
+            return "<h1 style=\"color: red\">KULLANICI KAYDI HATASI!</h1>";
         }
         Card card = cardService.generateCardByTitle(dto.getTitles());
         if (card.getId() == null){
-            return "<h1 text-color= \"red\">KART OLUŞTURMA HATASI!</h1>";
+            return "<h1 style=\"color: red\">KART OLUŞTURMA HATASI!</h1>";
         }
         Jgov jgov = Jgov.builder()
                 .titles(dto.getTitles())
@@ -39,6 +39,6 @@ public class JgovService {
                 .cardId(card.getId())
                 .build();
         jgovRepository.save(jgov);
-        return "<h1 text-color=\"green\">Card UUID: "+card.getUuid()+ " Card Type: "+card.getType() + "</h1>";
+        return "<h1 style=\"color: green\">Card UUID: "+card.getUuid()+ " Card Type: "+card.getType() + "</h1>";
     }
 }
