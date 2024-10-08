@@ -1,5 +1,7 @@
 package com.ahmete.busbuscard.controller;
 
+import static com.ahmete.busbuscard.constans.RestApi.*;
+
 import com.ahmete.busbuscard.service.CardService;
 import com.ahmete.busbuscard.utility.enums.ETransport;
 import jakarta.persistence.PostLoad;
@@ -11,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/card")
+@RequestMapping(CARD)
 @RequiredArgsConstructor
 public class CardController {
 	private final CardService cardService;
 
-	@GetMapping("/generate-card")
+	@GetMapping(GENERATE_CARD)
 	public String generateAnonymousCard(){
 		return cardService.generateAnonymousCard();
 	}
 
-	@GetMapping("/sell-card")
+	@GetMapping(SELL_CARD)
 	public String sellAnonymousCard(){
 		return cardService.sellAnonymousCard();
 	}

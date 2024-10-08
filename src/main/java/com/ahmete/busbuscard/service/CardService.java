@@ -4,11 +4,13 @@ import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.EState;
+import com.ahmete.busbuscard.utility.enums.ETitle;
 import com.ahmete.busbuscard.utility.enums.ETransport;
 import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +29,8 @@ public class CardService {
     }
 
 
-    public void save(Card card) {
-		cardRepository.save(card);
+    public Card save(Card card) {
+		return cardRepository.save(card);
 	}
 
 	public Card findMyCard(Long cardId) {
@@ -68,5 +70,24 @@ public class CardService {
 
 	public Optional<Card> findByUuid(String cardUuid) {
 		return cardRepository.findByUuid(cardUuid);
+	}
+
+	public Card generateCardByTitle(ETitle titles) {
+		LocalDate today = LocalDate.now();
+		LocalDate nextYear = today.plusYears(1);
+		Card card = Card.builder()
+				.expiryDate(nextYear)
+				.balance(0L)
+				.build();
+		switch (titles){
+			case CIVIL -> card.setType(ECardType.STANDARD);
+			case DISABLED -> card.setType(ECardType.HANDICAPPED);
+			case EYT -> card.setType(ECardType.EYT);
+			case GUARDS,JOURNALIST,MEDICINAL,TEACHER,SOLDIER,POLICE -> card.setType(ECardType.SPECIAL_FORCE);
+			case STUDENT -> card.setType(ECardType.STUDENT);
+			case VETERAN -> card.setType(ECardType.VETERAN);
+		}
+		return cardRepository.save(card);
+
 	}
 }
