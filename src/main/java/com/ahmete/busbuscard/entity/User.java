@@ -2,6 +2,7 @@ package com.ahmete.busbuscard.entity;
 
 import com.ahmete.busbuscard.utility.enums.EGender;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -19,6 +20,7 @@ public class User extends BaseEntity {
 	String name;
 	String surname;
 	@Column(unique = true, nullable = false, length = 11, updatable = false)
+	@Size(min = 11, max = 11)
 	String tc;
 	@Enumerated(EnumType.STRING)
 	EGender gender;

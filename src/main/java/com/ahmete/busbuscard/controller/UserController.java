@@ -1,20 +1,19 @@
 package com.ahmete.busbuscard.controller;
 
+import static com.ahmete.busbuscard.constans.RestApi.*;
+
 import com.ahmete.busbuscard.entity.User;
 import com.ahmete.busbuscard.service.UserService;
-import com.ahmete.busbuscard.utility.enums.EGender;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(USER)
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
@@ -23,12 +22,8 @@ public class UserController {
 	 * localhost:9090/user/register
 	 */
 
-	@PostMapping("/register")
-	public void UserRegister(String name, String surname, String tc, EGender gender){
-		userService.register(name, surname, tc, gender);
-	}
-
-	@GetMapping("/search")
+	//TODO: view ekleyerek sadece gelen kullanıcıların listesi (isim-soyisim)
+	@GetMapping(SEARCH)
 	public User searchUser(String tc){
 		Optional<User> byTC = userService.findByTC(tc);
 		if(byTC.isPresent()){

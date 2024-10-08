@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Appy For A Card</title>
+</head>
+<body>
+<form action="/jgov/register" method="post">
+    <label for="name">Firstname: </label>
+    <input type="text" name="name" id="name"> <br> <br>
+    <label for="surname">Surname: </label>
+    <input type="text" name="surname" id="surname"><br><br>
+    <label for="tc"> TC: </label>
+    <input type="text" name="tc" id="tc"><br><br>
+
+    <label for="gender">Select your gender:</label>
+    <select id="gender" name="gender">
+        <option value="">Select</option>
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+    </select> <br><br>
+
+    <label for="address"> Address: </label>
+    <input type="text" name="address" id="address"><br><br>
+
+    <label for="titles">Select your Title:</label>
+    <select id="titles" name="titles">
+        <option value="">Select</option>
+        <option value="STUDENT">Student</option>
+        <option value="CIVIL">Civil</option>
+        <option value="DISABLED">Disabled</option>
+        <option value="MEDICINAL">Medical</option>
+        <option value="SOLDIER">Soldier</option>
+        <option value="TEACHER">Teacher</option>
+        <option value="JOURNALIST">Journalist</option>
+        <option value="POLICE">Police</option>
+        <option value="GUARDS">Guards</option>
+        <option value="EYT">EYT</option>
+        <option value="VETERAN">Veteran</option>
+    </select> <br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
