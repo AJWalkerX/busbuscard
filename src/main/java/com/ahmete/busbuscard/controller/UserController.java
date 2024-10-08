@@ -21,8 +21,6 @@ public class UserController {
 	/**
 	 * localhost:9090/user/register
 	 */
-
-	//TODO: view ekleyerek sadece gelen kullanıcıların listesi (isim-soyisim)
 	@GetMapping(SEARCH)
 	public User searchUser(String tc){
 		Optional<User> byTC = userService.findByTC(tc);
