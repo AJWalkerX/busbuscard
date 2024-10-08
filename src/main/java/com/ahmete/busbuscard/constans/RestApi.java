@@ -12,4 +12,6 @@ public class RestApi {
     public static final String USE_CARD = "/use-card";
     public static final String GENERATE_CARD = "/generate-card";
     public static final String SELL_CARD = "/sell-card";
+    public static final String ADD_MONEY_CASH = "/add-money-cash";
+    public static final String ADD_MONEY_BANK = "/add-money-bank";
 }

@@ -33,8 +33,8 @@ public class CardService {
 		return cardRepository.save(card);
 	}
 
-	public Card findMyCard(Long cardId) {
-		return cardRepository.findById(cardId).orElse(null);
+	public Card findMyCard(String  cardId) {
+		return cardRepository.findByUuid(cardId).orElse(null);
 	}
 
 
@@ -89,5 +89,9 @@ public class CardService {
 		}
 		return cardRepository.save(card);
 
+	}
+
+	public boolean existsByCardUUID(String uuid) {
+		return cardRepository.existsByUuid(uuid);
 	}
 }
