@@ -34,7 +34,6 @@ public class PaymentService {
         }
         return "ARKADAN BASMAYAN KALDI MI?";
     }
-//? Buradaki payment hesaplama methodunun düzeltilmesi gerekebilir!
     private boolean calculatePayment(Card card, ETransport eTransport) {
         int paymentRate = (int) (BASE_VALUE * eTransport.getPaymentRate());
         int rawPaymentAmount = paymentRate + BASE_VALUE;

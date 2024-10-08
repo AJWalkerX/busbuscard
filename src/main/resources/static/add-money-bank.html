@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding Money</title>
+</head>
+<body>
+<form action="/transaction/add-money-bank" method="post">
+    <label for="amount">Amount: </label>
+    <input type="text" name="amount" id="amount"> <br><br>
+    <label for="uuid">Card uuid: </label>
+    <input type="text" name="uuid" id="uuid"> <br><br>
+    <label for="cardNumber">Bank card number: </label>
+    <input type="text" name="cardNumber" id="cardNumber"> <br><br>
+    <label for="cvc">cvc: </label>
+    <input type="text" name="cvc" id="cvc"> <br><br>
+    <label for="fullName"> name on card: </label>
+    <input type="text" name="fullName" id="fullName"> <br><br>
+    <label for="endYear"> End Year: </label>
+    <input type="text" name="endYear" id="endYear"> <br><br>
+    <label for="endMonth"> End Month: </label>
+    <input type="text" name="endMonth" id="endMonth"> <br><br>
+
+    <input type="submit" value="Submit" style="background: aqua; color: black">
+</form>
+</body>
+</html>

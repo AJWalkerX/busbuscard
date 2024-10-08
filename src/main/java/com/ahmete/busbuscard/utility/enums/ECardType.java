@@ -1,7 +1,7 @@
 package com.ahmete.busbuscard.utility.enums;
 
 public enum ECardType {
-	STANDARD(1.1),
+	STANDARD(0.1),
 	STUDENT(0.7),
 	HANDICAPPED(0.7),
 	SPECIAL_FORCE(0.4),
