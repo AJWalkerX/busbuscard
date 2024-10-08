@@ -4,11 +4,13 @@ import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.EState;
+import com.ahmete.busbuscard.utility.enums.ETransport;
 import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -20,7 +22,7 @@ public class CardService {
 
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
-		inActiveCardNumber = getInactiveCardNumber();
+        inActiveCardNumber = getInactiveCardNumber();
 
     }
 
@@ -61,5 +63,10 @@ public class CardService {
 
 	private int getInactiveCardNumber(){
 		return cardRepository.countAllByState(EState.PASSIVE);
+	}
+
+
+	public Optional<Card> findByUuid(String cardUuid) {
+		return cardRepository.findByUuid(cardUuid);
 	}
 }

@@ -1,0 +1,24 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Use Card</title>
+</head>
+<body>
+<form action="payment/use-card" method="post">
+    <label for="card_uuid">Enter card UUID: </label>
+    <input type="text" name="card_uuid" id="card_uuid"> <br> <br>
+
+    <label for="transport" >Select transport type: </label> <br>
+    <select id="transport" name="eTransport">
+        <option value="">Select</option>
+        <option value="BUS">BUS</option>
+        <option value="HIGHWAY">HIGHWAY</option>
+        <option value="SUBWAY">SUBWAY</option>
+    </select> <br> <br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>

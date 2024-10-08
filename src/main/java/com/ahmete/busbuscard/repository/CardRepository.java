@@ -6,13 +6,13 @@ import com.ahmete.busbuscard.utility.enums.EState;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
-
-    int findByState(EState eState);
-
 
     int countAllByState(EState eState);
 
     Card findDistinctFirstByStateAndType(EState eState, ECardType eCardType);
+
+    Optional<Card> findByUuid(String cardUuid);
 }
