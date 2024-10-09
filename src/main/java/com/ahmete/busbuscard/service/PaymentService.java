@@ -6,11 +6,13 @@ import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.repository.PaymentRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.ETransport;
+import com.ahmete.busbuscard.views.VwPaymentDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,5 +64,9 @@ public class PaymentService {
                 .transport(eTransport)
                 .build();
         paymentRepository.save(payment);
+    }
+    
+    public List<VwPaymentDetail> getAllPaymentList(String cardUuid) {
+        return paymentRepository.getAllPaymentDetailByCardId(cardUuid);
     }
 }

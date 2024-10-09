@@ -6,6 +6,7 @@ import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.EState;
 import com.ahmete.busbuscard.utility.enums.ETitle;
 import com.ahmete.busbuscard.utility.enums.ETransport;
+import com.ahmete.busbuscard.views.VwCardDetail;
 import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -93,5 +94,9 @@ public class CardService {
 
 	public boolean existsByCardUUID(String uuid) {
 		return cardRepository.existsByUuid(uuid);
+	}
+	
+	public Optional<VwCardDetail> getCardDetail(String cardUuid) {
+		return cardRepository.findByCardUuid(cardUuid);
 	}
 }

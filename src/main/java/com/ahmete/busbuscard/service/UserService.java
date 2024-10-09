@@ -2,6 +2,8 @@ package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.User;
 import com.ahmete.busbuscard.repository.UserRepository;
+import com.ahmete.busbuscard.views.VwUser;
+import com.ahmete.busbuscard.views.VwUserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,13 @@ public class UserService {
             return true;
         }
         return false;
-
+    }
+    
+    public List<VwUser> getAllUsers() {
+        return userRepository.findAllUsers();
+    }
+    
+    public Optional<VwUserDetail> getUserByTC(String tc) {
+       return userRepository.findUserDetailByTc(tc);
     }
 }
