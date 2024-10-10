@@ -4,7 +4,6 @@ import com.ahmete.busbuscard.dto.request.BankTransactionDto;
 import com.ahmete.busbuscard.dto.request.MoneyTransactionDto;
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Transaction;
-import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.repository.TransactionRepository;
 import com.ahmete.busbuscard.utility.enums.ETransactionType;
 import com.ahmete.busbuscard.views.VwTransactionDetail;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +59,8 @@ public class TransactionService {
 		return ResponseEntity.notFound().build();
     }
 	
-	
+	public List<VwTransactionDetail> getAllTransactionsList(String cardUuid) {
+		Long cardId = cardService.findMyCardId(cardUuid);
+		return transactionRepository.getAllTransactionByCardId(cardId);
+	}
 }

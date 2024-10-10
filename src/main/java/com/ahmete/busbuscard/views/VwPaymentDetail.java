@@ -13,8 +13,6 @@ import java.time.LocalDate;
 @Builder
 @Data
 public class VwPaymentDetail {
-	
-	String cardUuid;
 	Long amount;
 	ETransport transport;
 	LocalDate paymentDate;

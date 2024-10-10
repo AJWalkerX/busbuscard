@@ -17,6 +17,9 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     Card findDistinctFirstByStateAndType(EState eState, ECardType eCardType);
 
+    @Query("select c.id from Card c where c.uuid = :cardUuid")
+    Long findMyCardId(String cardUuid);
+
     Optional<Card> findByUuid(String cardUuid);
 
     boolean existsByUuid(String uuid);

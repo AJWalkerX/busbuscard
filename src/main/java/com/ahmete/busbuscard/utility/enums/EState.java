@@ -1,5 +1,7 @@
 package com.ahmete.busbuscard.utility.enums;
 
 public enum EState {
-	PASSIVE,ACTIVE
+	PASSIVE,
+	ACTIVE,
+	EXPIRED //Standart tarife
 }
