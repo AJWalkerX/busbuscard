@@ -27,6 +27,9 @@ public class PaymentService {
             if (card.getBalance() <= 0){
                 return "YETERSİİZ BAKİYEE!";
             }
+            if(freeTransferIsActive(card.getId())){
+
+            }
             if(calculatePayment(card, eTransport)){
                 return "BİİİP!";
             }
@@ -36,15 +39,6 @@ public class PaymentService {
     }
 
     private boolean calculatePayment(Card card, ETransport eTransport) {
-
-        Long previousPaymentTime = getPreviousPaymentTime(card.getId());
-        Long currentTime = System.currentTimeMillis();
-        Long transferTimeLimit = 90L * 60L * 1000L;
-        Boolean transferIsActive;
-
-        if (previousPaymentTime != null){
-            transferIsActive =(currentTime - previousPaymentTime) <= transferTimeLimit;
-        }
 
         int paymentRate = (int) (BASE_VALUE * eTransport.getPaymentRate());
         int rawPaymentAmount = paymentRate + BASE_VALUE;
@@ -63,6 +57,17 @@ public class PaymentService {
 		cardService.save(card);
         savePayment(paymentAmount, card.getId(), eTransport);
         return true;
+    }
+
+    private Boolean freeTransferIsActive(Long cardId) {
+        Long previousPaymentTime = getPreviousPaymentTime(cardId);
+        Long currentTime = System.currentTimeMillis();
+        Long transferTimeLimit = 90L * 60L * 1000L;
+
+        if (previousPaymentTime != null){
+            return (currentTime - previousPaymentTime) <= transferTimeLimit;
+        }
+        return false;
     }
 
     private Long  getPreviousPaymentTime(Long cardId){
