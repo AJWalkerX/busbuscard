@@ -4,16 +4,21 @@ import com.ahmete.busbuscard.utility.enums.ETransport;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
 public class VwPaymentDetail {
 	Long amount;
 	ETransport transport;
-	LocalDate paymentDate;
+	Long paymentDate;
+
+	public LocalDateTime getPaymentLocalDate(Long paymentDate) {
+		return Instant.ofEpochMilli(paymentDate).atZone(ZoneId.systemDefault()).toLocalDateTime();
+	}
 }

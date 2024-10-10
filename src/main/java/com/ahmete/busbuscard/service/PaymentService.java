@@ -2,6 +2,7 @@ package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Payment;
+import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.repository.PaymentRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.ETransport;
@@ -22,43 +23,61 @@ public class PaymentService {
 
     public String useCard(String card_uuid, ETransport eTransport) {
         Optional<Card> optionalCard = cardService.findByUuid(card_uuid);
+
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
-            if (card.getBalance() <= 0){
-                return "YETERSİİZ BAKİYEE!";
-            }
             if(freeTransferIsActive(card.getId())){
-
+                ControlPayment(card, eTransport, 0);
+                return "UCRETSİZ AKTARMA!";
             }
-            if(calculatePayment(card, eTransport)){
-                return "BİİİP!";
+            int paymentAmount = calculatePayment(card, eTransport);
+            if(checkCardBalance(paymentAmount, card.getId())){
+                ControlPayment(card, eTransport, paymentAmount);
+                return "BİİİP! " + paymentAmount;
             }
             return "YETERSİİZ BAKİYEE!";
         }
         return "ARKADAN BASMAYAN KALDI MI?";
     }
 
-    private boolean calculatePayment(Card card, ETransport eTransport) {
+    private int calculatePayment(Card card, ETransport eTransport) {
 
         int paymentRate = (int) (BASE_VALUE * eTransport.getPaymentRate());
         int rawPaymentAmount = paymentRate + BASE_VALUE;
         int discountRate = (int) (BASE_VALUE * card.getType().getDiscountRate());
-        int paymentAmount;
+
         if (card.getType() == ECardType.STANDARD){
-            paymentAmount = rawPaymentAmount + discountRate;
+            return rawPaymentAmount + discountRate;
         }
         else{
-            paymentAmount = rawPaymentAmount - discountRate;
+            return rawPaymentAmount - discountRate;
         }
-        if (paymentAmount > card.getBalance()) {
-            return false;
-        }
-        card.setBalance(card.getBalance() - paymentAmount);
-		cardService.save(card);
-        savePayment(paymentAmount, card.getId(), eTransport);
-        return true;
     }
 
+    private void ControlPayment(Card card, ETransport eTransport, int paymentAmount) {
+        if (paymentAmount == 0) {
+            savePayment(paymentAmount, card.getId(), eTransport);
+        }else{
+            card.setBalance(card.getBalance() - paymentAmount);
+            cardService.save(card);
+            savePayment(paymentAmount, card.getId(), eTransport);
+        }
+
+    }
+    private void savePayment(long paymentAmount, Long cardId, ETransport eTransport) {
+
+        Payment payment = Payment.builder()
+                .paymentDate(System.currentTimeMillis())
+                .amount(paymentAmount)
+                .cardId(cardId)
+                .transport(eTransport)
+                .build();
+        paymentRepository.save(payment);
+    }
+
+    private boolean checkCardBalance(int paymentAmount, Long cardId){
+        return paymentAmount > cardId;
+    }
     private Boolean freeTransferIsActive(Long cardId) {
         Long previousPaymentTime = getPreviousPaymentTime(cardId);
         Long currentTime = System.currentTimeMillis();
@@ -78,16 +97,7 @@ public class PaymentService {
         return null;
     }
 
-    private void savePayment(long paymentAmount, Long cardId, ETransport eTransport) {
 
-        Payment payment = Payment.builder()
-                .paymentDate(System.currentTimeMillis())
-                .amount(paymentAmount)
-                .cardId(cardId)
-                .transport(eTransport)
-                .build();
-        paymentRepository.save(payment);
-    }
     
     public List<VwPaymentDetail> getAllPaymentList(String cardUuid) {
         Long carId = cardService.findMyCardId(cardUuid);
