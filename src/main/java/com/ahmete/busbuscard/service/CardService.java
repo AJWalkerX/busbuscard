@@ -5,10 +5,7 @@ import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.EState;
 import com.ahmete.busbuscard.utility.enums.ETitle;
-import com.ahmete.busbuscard.utility.enums.ETransport;
 import com.ahmete.busbuscard.views.VwCardDetail;
-import jakarta.persistence.PrePersist;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,18 +23,19 @@ public class CardService {
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
         inActiveCardNumber = getInactiveCardNumber();
-
     }
-
 
     public Card save(Card card) {
 		return cardRepository.save(card);
 	}
 
-	public Card findMyCard(String  cardId) {
-		return cardRepository.findByUuid(cardId).orElse(null);
+	public Card findMyCard(String  uuid) {
+		return cardRepository.findByUuid(uuid).orElse(null);
 	}
 
+	public Long findMyCardId(String  uuid) {
+		return cardRepository.findMyCardId(uuid);
+	}
 
 	public String  generateAnonymousCard() {
 		if (inActiveCardNumber == 0) {

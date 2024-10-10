@@ -33,6 +33,6 @@ public class PaymentController {
 				                         .code(200)
 				                         .message("List of payments")
 				                         .data(paymentService.getAllPaymentList(cardUuid))
-		                                     .build());
+		                                 .build());
 	}
 }

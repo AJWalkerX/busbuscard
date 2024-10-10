@@ -18,4 +18,5 @@ public class RestApi {
     public static final String GETUSER = "/get-user";
     public static final String GETCARD = "/get-card";
     public static final String GETPAYMENTDETAIL = "/get-payment-detail";
+    public static final String GETTRANSACTIONDETAIL = "/get-transaction";
 }

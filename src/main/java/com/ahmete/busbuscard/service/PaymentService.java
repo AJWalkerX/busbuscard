@@ -2,13 +2,11 @@ package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Payment;
-import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.repository.PaymentRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.ETransport;
 import com.ahmete.busbuscard.views.VwPaymentDetail;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,7 +34,18 @@ public class PaymentService {
         }
         return "ARKADAN BASMAYAN KALDI MI?";
     }
+
     private boolean calculatePayment(Card card, ETransport eTransport) {
+
+        Long previousPaymentTime = getPreviousPaymentTime(card.getId());
+        Long currentTime = System.currentTimeMillis();
+        Long transferTimeLimit = 90L * 60L * 1000L;
+        Boolean transferIsActive;
+
+        if (previousPaymentTime != null){
+            transferIsActive =(currentTime - previousPaymentTime) <= transferTimeLimit;
+        }
+
         int paymentRate = (int) (BASE_VALUE * eTransport.getPaymentRate());
         int rawPaymentAmount = paymentRate + BASE_VALUE;
         int discountRate = (int) (BASE_VALUE * card.getType().getDiscountRate());
@@ -52,21 +61,31 @@ public class PaymentService {
         }
         card.setBalance(card.getBalance() - paymentAmount);
 		cardService.save(card);
-        savePayment(paymentAmount, card.getUuid(), eTransport);
+        savePayment(paymentAmount, card.getId(), eTransport);
         return true;
     }
 
-    private void savePayment(long paymentAmount, String cardUuid, ETransport eTransport) {
+    private Long  getPreviousPaymentTime(Long cardId){
+        Optional<Long> latestPaymentDateByCardId = paymentRepository.findLatestPaymentDateByCardId(cardId);
+        if (latestPaymentDateByCardId.isPresent()){
+            return latestPaymentDateByCardId.get();
+        }
+        return null;
+    }
+
+    private void savePayment(long paymentAmount, Long cardId, ETransport eTransport) {
+
         Payment payment = Payment.builder()
-                .paymentDate(LocalDate.now())
+                .paymentDate(System.currentTimeMillis())
                 .amount(paymentAmount)
-                .cardId(cardUuid)
+                .cardId(cardId)
                 .transport(eTransport)
                 .build();
         paymentRepository.save(payment);
     }
     
     public List<VwPaymentDetail> getAllPaymentList(String cardUuid) {
-        return paymentRepository.getAllPaymentDetailByCardId(cardUuid);
+        Long carId = cardService.findMyCardId(cardUuid);
+        return paymentRepository.getAllPaymentDetailByCardId(carId);
     }
 }

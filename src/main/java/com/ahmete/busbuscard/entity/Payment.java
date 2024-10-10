@@ -19,11 +19,11 @@ public class Payment extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	@Column(name="card_id")
-	String cardId;
+	Long cardId;
 	Long amount;
 	@Column(name="payment_date")
 	@Builder.Default
-	LocalDate paymentDate = LocalDate.now();
+	Long paymentDate = System.currentTimeMillis();
 	@Enumerated(EnumType.STRING)
 	ETransport transport;
 }

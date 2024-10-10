@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Data
-public class VwTransactionDetail {
+public class VwTransactionDetail{
 	
 	Long amount;
 	LocalDate transDate;
