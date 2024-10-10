@@ -1,5 +1,8 @@
 package com.ahmete.busbuscard.utility.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum ETransport {
 	BUS (0.1),
 	HIGHWAY (0.8),
@@ -12,7 +15,4 @@ public enum ETransport {
 		this.paymentRate = paymentRate;
 	}
 
-	public double getPaymentRate() {
-		return paymentRate;
-	}
 }
