@@ -2,6 +2,7 @@ package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Payment;
+import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.repository.PaymentRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.ETransport;
@@ -19,6 +20,7 @@ public class PaymentService {
     private final int BASE_VALUE = 10;
     private final PaymentRepository paymentRepository;
     private final CardService cardService;
+    private final CardExpirationService cardExpirationService;
 
     public String useCard(String card_uuid, ETransport eTransport) {
         Optional<Card> optionalCard = cardService.findByUuid(card_uuid);
@@ -45,12 +47,17 @@ public class PaymentService {
         int rawPaymentAmount = paymentRate + BASE_VALUE;
         int discountRate = (int) (BASE_VALUE * card.getType().getDiscountRate());
 
-        if (card.getType() == ECardType.STANDARD){
+        if (card.getType() == ECardType.STANDARD || calculateExpirationDate(card.getId())){
             return rawPaymentAmount + discountRate;
         }
         else{
             return rawPaymentAmount - discountRate;
         }
+    }
+
+    private boolean calculateExpirationDate(Long id) {
+        Long expirationDate = cardExpirationService.getExpirationDateById(id);
+        return expirationDate <= System.currentTimeMillis();
     }
 
     private void ControlPayment(Card card, ETransport eTransport, int paymentAmount) {

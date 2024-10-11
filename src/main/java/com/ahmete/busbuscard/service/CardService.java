@@ -10,6 +10,9 @@ import com.ahmete.busbuscard.utility.enums.ETitle;
 import com.ahmete.busbuscard.views.VwCardDetail;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,5 +100,23 @@ public class CardService {
 	
 	public Optional<VwCardDetail> getCardDetail(String cardUuid) {
 		return cardRepository.findByCardUuid(cardUuid);
+	}
+
+	public LocalDate extendCardDate(String cardUuid) {
+		Card myCard = findMyCard(cardUuid);
+		CardExpiration cardExpiration = cardExpirationService.findByCardId(myCard.getId());
+		if (myCard.getType() != ECardType.STANDARD && cardExpiration.getExpirationDate() > System.currentTimeMillis()) {
+			long oneYearMillis = 365L * 24 * 60 * 60 * 1000;
+			long newExpiryDate = System.currentTimeMillis() + oneYearMillis;
+			cardExpiration.setExpirationDate(newExpiryDate);
+
+			cardExpirationService.save(CardExpirationSaveRequestDto.builder().cardId(myCard.getId())
+							.expirationDate(cardExpiration.getExpirationDate())
+					.build());
+			return Instant.ofEpochMilli(newExpiryDate)
+					.atZone(ZoneId.systemDefault())
+					.toLocalDate();
+		}
+		return null;
 	}
 }

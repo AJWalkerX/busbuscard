@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping(CARD)
 @RequiredArgsConstructor
@@ -41,5 +43,14 @@ public class CardController {
 		                                     .build());
 	}
 
+	@GetMapping(EXTENT_DATE)
+	public ResponseEntity<BaseResponse<String>> extendExpiryDate(String cardUuid){
+		return ResponseEntity.ok(BaseResponse.<String>builder()
+						.success(true)
+						.code(200)
+						.message("Expiry date Expanded")
+						.data("new expiry date: "+ cardService.extendCardDate(cardUuid).toString())
+				.build());
+	}
 
 }
