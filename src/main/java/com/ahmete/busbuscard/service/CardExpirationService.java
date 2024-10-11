@@ -22,4 +22,12 @@ public class CardExpirationService {
                         .build()
         );
     }
+
+    public Long getExpirationDateById(Long id) {
+        return cardExpirationRepository.getExpirationDateByCardId(id);
+    }
+
+    public CardExpiration findByCardId(Long id) {
+        return cardExpirationRepository.findByCardId(id);
+    }
 }
