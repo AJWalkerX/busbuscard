@@ -1,6 +1,8 @@
 package com.ahmete.busbuscard.service;
 
+import com.ahmete.busbuscard.dto.request.CardExpirationSaveRequestDto;
 import com.ahmete.busbuscard.entity.Card;
+import com.ahmete.busbuscard.entity.CardExpiration;
 import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.EState;
@@ -8,7 +10,6 @@ import com.ahmete.busbuscard.utility.enums.ETitle;
 import com.ahmete.busbuscard.views.VwCardDetail;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +18,13 @@ import java.util.Optional;
 public class CardService {
 	
 	private final CardRepository cardRepository;
+	private final CardExpirationService cardExpirationService;
 
 	private static int inActiveCardNumber ;
 
-    public CardService(CardRepository cardRepository) {
+    public CardService(CardRepository cardRepository, CardExpirationService cardExpirationService) {
         this.cardRepository = cardRepository;
+        this.cardExpirationService = cardExpirationService;
         inActiveCardNumber = getInactiveCardNumber();
     }
 
@@ -72,10 +75,7 @@ public class CardService {
 	}
 
 	public Card generateCardByTitle(ETitle titles) {
-		LocalDate today = LocalDate.now();
-		LocalDate nextYear = today.plusYears(1);
 		Card card = Card.builder()
-				.expiryDate(nextYear)
 				.balance(0L)
 				.build();
 		switch (titles){
@@ -86,8 +86,9 @@ public class CardService {
 			case STUDENT -> card.setType(ECardType.STUDENT);
 			case VETERAN -> card.setType(ECardType.VETERAN);
 		}
-		return cardRepository.save(card);
-
+		card = cardRepository.save(card);
+	 	cardExpirationService.save(CardExpirationSaveRequestDto.builder().cardId(card.getId()).build());
+		return card;
 	}
 
 	public boolean existsByCardUUID(String uuid) {

@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 @AllArgsConstructor
 @Builder
@@ -23,6 +25,12 @@ public class VwUserDetail {
 	ETitle titles;
 	String uuid;
 	Long balance;
-	LocalDate expiryDate;
+	Long expiryDate;
 	ECardType type;
+
+	public LocalDate getExpiryDateInLocalDateFormat(){
+		return Instant.ofEpochMilli(this.expiryDate)
+				.atZone(ZoneId.systemDefault())
+				.toLocalDate();
+	}
 }

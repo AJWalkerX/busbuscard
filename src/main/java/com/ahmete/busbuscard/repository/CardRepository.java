@@ -23,7 +23,9 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     Optional<Card> findByUuid(String cardUuid);
 
     boolean existsByUuid(String uuid);
-    
-    @Query("select new com.ahmete.busbuscard.views.VwCardDetail(c.uuid,c.balance,c.type,c.expiryDate)from Card c where c.uuid= :uuid")
+
+    //TODO: ExpiryDate Ekle
+    @Query("select new com.ahmete.busbuscard.views.VwCardDetail(c.uuid,c.balance,c.type, ce.expirationDate)from Card c" +
+            " JOIN CardExpiration ce ON ce.cardId = c.id WHERE c.uuid= :uuid")
     Optional<VwCardDetail> findByCardUuid(@Param("uuid") String cardUuid);
 }

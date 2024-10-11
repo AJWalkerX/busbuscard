@@ -22,8 +22,6 @@ public class Card extends BaseEntity {
 	@Column(updatable = false, nullable = false, unique = true)
 	String uuid;
 	Long balance;
-	@Column(name="expiry_date")
-	LocalDate expiryDate;
 	@Enumerated(EnumType.STRING)
 	ECardType type;
 

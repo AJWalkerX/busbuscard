@@ -14,13 +14,13 @@ import lombok.experimental.SuperBuilder;
 @Data
 @Entity
 @Table(name = "tbl_card_expiration")
-public class Card_Expiration extends BaseEntity{
+public class CardExpiration extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "card_id")
     private Long cardId;
-
+    @Column(name = "expiration_date")
     private Long expirationDate;
 
 }

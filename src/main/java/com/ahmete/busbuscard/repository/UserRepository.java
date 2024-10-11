@@ -19,12 +19,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<VwUser> findAllUsers();
     
     @Query(value = "SELECT new com.ahmete.busbuscard.views.VwUserDetail(u.name, u.surname, u.tc, u.gender, " +
-            "j.address, j.titles, c.uuid, c.balance, c.expiryDate, c.type) " +
+            "j.address, j.titles, c.uuid, c.balance, ce.expirationDate, c.type) " +
             "FROM User u " +
             "JOIN Jgov j ON u.id = j.userId " + // u.jgovs, User entity'sinde Jgov ile tanımlı ilişkiyi ifade eder
-            "JOIN Card c ON c.id = j.cardId " + // j.cards, Jgov entity'sinde Card ile tanımlı ilişkiyi ifade eder
-            "WHERE u.tc = :tc")
-    Optional<VwUserDetail> findUserDetailByTc(@Param("tc") String tc);
+            "JOIN Card c ON c.id = j.cardId " +// j.cards, Jgov entity'sinde Card ile tanımlı ilişkiyi ifade eder
+            "JOIN CardExpiration ce ON ce.cardId = c.id" +
+            " WHERE u.tc = :tc")
+    Optional<VwUserDetail> findUserDetailByTc(String tc);
     
     
     
