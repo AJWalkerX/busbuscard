@@ -2,15 +2,14 @@ package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Payment;
-import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.repository.PaymentRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.ETransport;
+import com.ahmete.busbuscard.views.VwLatestPayment;
 import com.ahmete.busbuscard.views.VwPaymentDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,26 +77,24 @@ public class PaymentService {
     private boolean checkCardBalance(int paymentAmount, Long cardId){
         return paymentAmount > cardId;
     }
-    private Boolean freeTransferIsActive(Long cardId) {
-        Long previousPaymentTime = getPreviousPaymentTime(cardId);
-        Long currentTime = System.currentTimeMillis();
-        Long transferTimeLimit = 90L * 60L * 1000L;
 
-        if (previousPaymentTime != null){
-            return (currentTime - previousPaymentTime) <= transferTimeLimit;
+    private Boolean freeTransferIsActive(Long cardId) {
+        Optional<VwLatestPayment> latestPaymentOptional = paymentRepository.findLatestPaymentDateAndAmountByCardId(cardId);
+        if (latestPaymentOptional.isPresent()) {
+            VwLatestPayment latestPaymentVw = latestPaymentOptional.get();
+            if (latestPaymentVw.getAmount() == 0){
+                return false;
+            }
+            Long previousPaymentTime = latestPaymentVw.getPaymentDate();
+            Long currentTime = System.currentTimeMillis();
+            Long transferTimeLimit = 90L * 60L * 1000L;
+
+            if (previousPaymentTime != null){
+                return (currentTime - previousPaymentTime) <= transferTimeLimit;
+            }
         }
         return false;
     }
-
-    private Long  getPreviousPaymentTime(Long cardId){
-        Optional<Long> latestPaymentDateByCardId = paymentRepository.findLatestPaymentDateByCardId(cardId);
-        if (latestPaymentDateByCardId.isPresent()){
-            return latestPaymentDateByCardId.get();
-        }
-        return null;
-    }
-
-
     
     public List<VwPaymentDetail> getAllPaymentList(String cardUuid) {
         Long carId = cardService.findMyCardId(cardUuid);
