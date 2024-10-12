@@ -4,6 +4,8 @@ import com.ahmete.busbuscard.dto.request.ApplyCardRequestDto;
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Jgov;
 import com.ahmete.busbuscard.entity.User;
+import com.ahmete.busbuscard.exception.BusbusCardException;
+import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.JgovRepository;
 import com.ahmete.busbuscard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +28,11 @@ public class JgovService {
                 .build();
         user = userService.save(user);
         if (user.getId() == null){
-            return "<h1 style=\"color: red\">KULLANICI KAYDI HATASI!</h1>";
+            throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
         }
         Card card = cardService.generateCardByTitle(dto.getTitles());
         if (card.getId() == null){
-            return "<h1 style=\"color: red\">KART OLUŞTURMA HATASI!</h1>";
+            throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
         }
         Jgov jgov = Jgov.builder()
                 .titles(dto.getTitles())

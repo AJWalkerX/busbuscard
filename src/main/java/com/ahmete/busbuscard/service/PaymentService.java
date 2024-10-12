@@ -1,8 +1,10 @@
 package com.ahmete.busbuscard.service;
 
+import com.ahmete.busbuscard.dto.request.UseCardRequestDto;
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Payment;
-import com.ahmete.busbuscard.repository.CardRepository;
+import com.ahmete.busbuscard.exception.BusbusCardException;
+import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.PaymentRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.ETransport;
@@ -22,23 +24,23 @@ public class PaymentService {
     private final CardService cardService;
     private final CardExpirationService cardExpirationService;
 
-    public String useCard(String card_uuid, ETransport eTransport) {
-        Optional<Card> optionalCard = cardService.findByUuid(card_uuid);
+    public String useCard(UseCardRequestDto dto) {
+        Optional<Card> optionalCard = cardService.findByUuid(dto.getCard_uuid());
 
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
             if(freeTransferIsActive(card.getId())){
-                ControlPayment(card, eTransport, 0);
+                ControlPayment(card, dto.getETransport(), 0);
                 return "UCRETSİZ AKTARMA!";
             }
-            int paymentAmount = calculatePayment(card, eTransport);
+            int paymentAmount = calculatePayment(card, dto.getETransport());
             if(checkCardBalance(paymentAmount, card.getId())){
-                ControlPayment(card, eTransport, paymentAmount);
+                ControlPayment(card, dto.getETransport(), paymentAmount);
                 return "BİİİP! " + paymentAmount;
             }
-            return "YETERSİİZ BAKİYEE!";
+           throw new BusbusCardException(EErrorType.INSUFFICIENT_BALANCE_ERROR);
         }
-        return "ARKADAN BASMAYAN KALDI MI?";
+       throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
     }
 
     private int calculatePayment(Card card, ETransport eTransport) {
@@ -103,6 +105,7 @@ public class PaymentService {
         return false;
     }
     
+    //TODO BELKİ SERVER ERROR VERDİREBİLİRİZ
     public List<VwPaymentDetail> getAllPaymentList(String cardUuid) {
         Long carId = cardService.findMyCardId(cardUuid);
         return paymentRepository.getAllPaymentDetailByCardId(carId);

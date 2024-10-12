@@ -3,6 +3,8 @@ package com.ahmete.busbuscard.service;
 import com.ahmete.busbuscard.dto.request.CardExpirationSaveRequestDto;
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.CardExpiration;
+import com.ahmete.busbuscard.exception.BusbusCardException;
+import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.CardRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import com.ahmete.busbuscard.utility.enums.EState;
@@ -54,7 +56,7 @@ public class CardService {
 			inActiveCardNumber = inActiveCardNumber + 5;
 			return "Kart oluşturuldu!";
 		}
-		return "Elinde yeterince kart var!";
+		throw new BusbusCardException(EErrorType.OVER_REQUEST_CARD_ERROR);
 	}
 
 	public String sellAnonymousCard() {
@@ -65,7 +67,7 @@ public class CardService {
 			inActiveCardNumber = inActiveCardNumber -1;
 			return "Kart Satıldı! " +card.getUuid();
 		}
-		return "Elimdeki kartlar tükendi!";
+		throw new BusbusCardException(EErrorType.OUT_OF_CARD_ANONYMOUS_ERROR);
 	}
 
 	private int getInactiveCardNumber(){
@@ -117,6 +119,6 @@ public class CardService {
 					.atZone(ZoneId.systemDefault())
 					.toLocalDate();
 		}
-		return null;
+		throw new BusbusCardException(EErrorType.INVALID_CARD_ERROR);
 	}
 }

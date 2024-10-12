@@ -2,6 +2,7 @@ package com.ahmete.busbuscard.controller;
 
 import static com.ahmete.busbuscard.constans.RestApi.*;
 
+import com.ahmete.busbuscard.dto.request.UseCardRequestDto;
 import com.ahmete.busbuscard.dto.response.BaseResponse;
 import com.ahmete.busbuscard.service.PaymentService;
 import com.ahmete.busbuscard.utility.enums.ETransport;
@@ -22,8 +23,8 @@ public class PaymentController {
 	private final PaymentService paymentService;
 
 	@PostMapping(USE_CARD)
-	public String useCard(String card_uuid, ETransport eTransport){
-		return paymentService.useCard(card_uuid, eTransport);
+	public String useCard(UseCardRequestDto dto) {
+		return paymentService.useCard(dto);
 	}
 	
 	@GetMapping(GETPAYMENTDETAIL)
