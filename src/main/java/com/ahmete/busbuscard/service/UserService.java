@@ -1,6 +1,8 @@
 package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.User;
+import com.ahmete.busbuscard.exception.BusbusCardException;
+import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.UserRepository;
 import com.ahmete.busbuscard.views.VwUser;
 import com.ahmete.busbuscard.views.VwUserDetail;
@@ -25,9 +27,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findByTC(String tc) {
-        return userRepository.findByTc(tc);
-
+    //TODO VALIDATION_ERROR bakılacak fieldları vermiyor!
+    public User findByTC(String tc) {
+        Optional<User> user = userRepository.findByTc(tc);
+        if(tc.length() != 11) {
+            throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
+        }
+        if(user.isEmpty()) {
+            throw new BusbusCardException(EErrorType.USER_NOT_FOUND);
+        }
+        return user.get();
     }
 
     public Boolean existsByTC(String tc) {

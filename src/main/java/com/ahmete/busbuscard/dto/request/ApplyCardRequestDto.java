@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class ApplyCardRequestDto {
     String address;
     @NotNull
-    @NotEmpty
     ETitle titles;
     //User Entity
     @NotNull

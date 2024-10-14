@@ -26,19 +26,25 @@ public class TransactionController {
 	private final CardService cardService;
 
 	@PostMapping(ADD_MONEY_CASH)
-	public ResponseEntity<String> addMoneyCashBank(MoneyTransactionDto dto){
-		if(!cardService.existsByCardUUID(dto.getUuid())){
-			return ResponseEntity.notFound().build();
-		}
-		return transactionService.addMoneyCash(dto);
+	public ResponseEntity<BaseResponse<String>> addMoneyCash(MoneyTransactionDto dto){
+
+		return ResponseEntity.ok(BaseResponse.<String>builder()
+				.success(true)
+				.code(200)
+				.message("Money loaded successfully")
+				.data(transactionService.addMoneyCash(dto))
+				.build());
 	}
 
 	@PostMapping(ADD_MONEY_BANK)
-	public ResponseEntity<String> addMoneyCashBank(BankTransactionDto dto){
-		if(!cardService.existsByCardUUID(dto.getUuid())){
-			return ResponseEntity.notFound().build();
-		}
-		return transactionService.addMoneyBank(dto);
+	public ResponseEntity<BaseResponse<String>> addMoneyBank(BankTransactionDto dto){
+
+		return ResponseEntity.ok(BaseResponse.<String>builder()
+				.success(true)
+				.code(200)
+				.message("Money loaded successfully")
+				.data(transactionService.addMoneyBank(dto))
+				.build());
 	}
 
 	@GetMapping(GETTRANSACTIONDETAIL)
