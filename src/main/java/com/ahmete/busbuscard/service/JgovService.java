@@ -28,11 +28,11 @@ public class JgovService {
                 .build();
         user = userService.save(user);
         if (user.getId() == null){
-            throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
+            throw new BusbusCardException(EErrorType.INTERNAL_SERVER_ERROR);
         }
         Card card = cardService.generateCardByTitle(dto.getTitles());
         if (card.getId() == null){
-            throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
+            throw new BusbusCardException(EErrorType.INTERNAL_SERVER_ERROR);
         }
         Jgov jgov = Jgov.builder()
                 .titles(dto.getTitles())
