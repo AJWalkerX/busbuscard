@@ -3,15 +3,14 @@ package com.ahmete.busbuscard.controller;
 import static com.ahmete.busbuscard.constans.RestApi.*;
 
 import com.ahmete.busbuscard.dto.request.ApplyCardRequestDto;
-import com.ahmete.busbuscard.entity.Jgov;
+import com.ahmete.busbuscard.exception.BusbusCardException;
+import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.service.JgovService;
 import com.ahmete.busbuscard.service.UserService;
-import com.ahmete.busbuscard.utility.enums.ETitle;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(JGOV)
@@ -26,10 +25,10 @@ public class JgovController {
 	 */
 
 	@PostMapping(REGISTER)
-	public ResponseEntity<String> jgovRegister(ApplyCardRequestDto dto) {
+	public ResponseEntity<String> jgovRegister(@RequestBody @Valid ApplyCardRequestDto dto) {
 		String card_uuid = jgovService.apply(dto);
 		if (!userService.existsByTC(String.valueOf(dto.getTc()))){
-			return ResponseEntity.badRequest().body(null);
+			throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
 		}
 		return ResponseEntity.ok(card_uuid);
 	}

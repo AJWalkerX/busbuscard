@@ -31,6 +31,14 @@ public class GlobalExceptionHandler {
 				});
 		return createResponseEntity(EErrorType.VALIDATION_ERROR,HttpStatus.BAD_REQUEST,fieldErrors);
 	}
+
+	@ExceptionHandler(BusbusCardException.class)
+	@ResponseBody
+	public ResponseEntity<ErrorMessage> busbusCardExceptionHandler(BusbusCardException e) {
+
+
+		return createResponseEntity(e.getErrorType(), e.getErrorType().httpStatus, null);
+	}
 	
 	private ResponseEntity<ErrorMessage> createResponseEntity(EErrorType eErrorType, HttpStatus httpStatus,
 	                                                          List<String> fields) {
