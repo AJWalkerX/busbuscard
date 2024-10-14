@@ -7,6 +7,12 @@
 ### 400
 * Girilen parametlerelerin hatalı olma durumu
 
+## SERVICE KATMANI - USERSERVICE(1)
+* 1 X X X
+### 1001
+* Kullanıcı bulunamadı
+### 1002
+
 
 ## SERVICE KATMANI - CARD İŞLEMLERİ (5)
 * 5 X X X
@@ -24,4 +30,10 @@
 ## SERVICE KATMANI - TRANSACTIONSERVICE (6)
 * 6 X X X
 ### 6001
-* Tarih hatası 
+* Tarih hatası
+
+* 6 X X 2 (Transaction Bakiye İşlemleri)
+### 6002
+* Ulaşım kartına yetersiz bakiyeden para yükleyememe hatası
+### 6012
+* Ulaşım kartına minimum kotadan az para yükleme hatası (Örn: 20 Tlden az yüklenemez gibi)

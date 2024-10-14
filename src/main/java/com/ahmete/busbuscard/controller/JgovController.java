@@ -24,6 +24,7 @@ public class JgovController {
 	 *
 	 */
 
+	//TODO Düzeltilmesi gerekli.
 	@PostMapping(REGISTER)
 	public ResponseEntity<String> jgovRegister(@RequestBody @Valid ApplyCardRequestDto dto) {
 		String card_uuid = jgovService.apply(dto);

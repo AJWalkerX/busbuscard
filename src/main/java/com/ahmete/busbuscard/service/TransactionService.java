@@ -22,43 +22,56 @@ import java.util.List;
 public class TransactionService {
 	private final TransactionRepository transactionRepository;
 	private final CardService cardService;
+	private final Integer MIN_TRANSACTION_LIMIT = 20;
+	private final Integer MAX_TRANSACTION_LIMIT = 500;
 
-	public ResponseEntity<String> addMoneyCash(MoneyTransactionDto dto) {
+	public String addMoneyCash(MoneyTransactionDto dto) {
 			Card card = cardService.findMyCard(dto.getUuid());
-			if (card != null) {
-				Transaction transaction = Transaction.builder()
-						.amount(dto.getAmount())
-						.transactionType(ETransactionType.CASH)
-						.cardId(card.getId())
-						.build();
-				card.setBalance(card.getBalance() + transaction.getAmount());
-				cardService.save(card);
-				transactionRepository.save(transaction);
-				return ResponseEntity.ok("New busbus card balance: "+card.getBalance().toString());
+
+			if (card == null) {
+				throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
 			}
-			throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
+			if(dto.getAmount()== 0){
+				throw new BusbusCardException(EErrorType.TRANSACTION_INSUFFICIENT_BALANCE);
+			}
+			if(dto.getAmount()<MIN_TRANSACTION_LIMIT||dto.getAmount()>MAX_TRANSACTION_LIMIT){
+				throw new BusbusCardException(EErrorType.TRANSACTION_OUT_OF_BOUNDS);
+			}
+		Transaction transaction = Transaction.builder()
+				.amount(dto.getAmount())
+				.transactionType(ETransactionType.CASH)
+				.cardId(card.getId())
+				.build();
+		card.setBalance(card.getBalance() + transaction.getAmount());
+		cardService.save(card);
+		transactionRepository.save(transaction);
+		return "New busbus card balance: "+card.getBalance().toString();
+
 	}
 
-    public ResponseEntity<String> addMoneyBank(BankTransactionDto dto) {
+    public String addMoneyBank(BankTransactionDto dto) {
 		Card card = cardService.findMyCard(dto.getUuid());
-		if (dto.getEndYear() < Integer.parseInt(String.valueOf(LocalDate.now().getYear())) ) {
+		if (card == null) {
+			throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
+		}
+		if (dto.getEndYear() < Integer.parseInt(String.valueOf(LocalDate.now().getYear()))||dto.getEndMonth() < Integer.parseInt(String.valueOf(LocalDate.now().getMonthValue())) ) {
 			throw new BusbusCardException(EErrorType.BANK_CARD_EXPIRY_DATE_ERROR);
 		}
-		if (dto.getEndMonth() < Integer.parseInt(String.valueOf(LocalDate.now().getMonthValue())) ) {
-			throw new BusbusCardException(EErrorType.BANK_CARD_EXPIRY_DATE_ERROR);
+		if(dto.getAmount()==0){
+			throw new BusbusCardException(EErrorType.TRANSACTION_INSUFFICIENT_BALANCE);
 		}
-		if (card != null) {
-			Transaction transaction = Transaction.builder()
-					.amount(dto.getAmount())
-					.transactionType(ETransactionType.BANK)
-					.cardId(card.getId())
-					.build();
-			card.setBalance(card.getBalance() + transaction.getAmount());
-			cardService.save(card);
-			transactionRepository.save(transaction);
-			return ResponseEntity.ok("New busbus card balance: "+card.getBalance().toString());
+		if(dto.getAmount()<MIN_TRANSACTION_LIMIT||dto.getAmount()>MAX_TRANSACTION_LIMIT){
+			throw new BusbusCardException(EErrorType.TRANSACTION_OUT_OF_BOUNDS);
 		}
-	    throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
+		Transaction transaction = Transaction.builder()
+				.amount(dto.getAmount())
+				.transactionType(ETransactionType.BANK)
+				.cardId(card.getId())
+				.build();
+		card.setBalance(card.getBalance() + transaction.getAmount());
+		cardService.save(card);
+		transactionRepository.save(transaction);
+		return "New busbus card balance: "+card.getBalance().toString();
     }
 	
 	public List<VwTransactionDetail> getAllTransactionsList(String cardUuid) {
