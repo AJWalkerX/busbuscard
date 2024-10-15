@@ -12,6 +12,8 @@
 ### 1001
 * Kullanıcı bulunamadı
 ### 1002
+* TC kimlik hali hazırda var hatası!
+
 
 
 ## SERVICE KATMANI - CARD İŞLEMLERİ (5)
@@ -28,7 +30,7 @@
 * Gecersiz kart hatası
 
 ## SERVICE KATMANI - TRANSACTIONSERVICE (6)
-* 6 X X X
+* 6 X X X 
 ### 6001
 * Tarih hatası
 

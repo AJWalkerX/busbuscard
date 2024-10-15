@@ -1,9 +1,9 @@
+VALIDATION HATALARI
+*Field'lar boş geliyor bunun sebebi ne olabilir? 
+
+
 payment/user-card
 Cüzdanda para varken işlem yapamıyoruz.
-
-jgov/register
-hata : 500 alıyoruz.
-doğru şekilde girmemize rağmen hata 500 alıyoruz (Error: response status is 500)
 
 /user/search
 hata : 400 alıyoruz (VALIDATION_ERROR)

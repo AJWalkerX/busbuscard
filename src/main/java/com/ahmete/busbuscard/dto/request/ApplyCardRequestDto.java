@@ -2,6 +2,7 @@ package com.ahmete.busbuscard.dto.request;
 
 import com.ahmete.busbuscard.utility.enums.EGender;
 import com.ahmete.busbuscard.utility.enums.ETitle;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,17 +18,17 @@ import lombok.NoArgsConstructor;
 @Data
 public class ApplyCardRequestDto {
     String address;
-    @NotNull
-    ETitle titles;
+    @NotEmpty
+    String titles;
     //User Entity
-    @NotNull
-    @Size(min = 3, max = 20)
+    @NotEmpty
     String name;
-    @NotNull
-    @Size(min = 3, max = 20)
+    @NotEmpty
     String surname;
     @NotNull
     @Size(min = 11, max = 11)
     String tc;
-    EGender gender;
+    @NotEmpty
+    String gender;
+
 }
