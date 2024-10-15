@@ -25,3 +25,14 @@ public interface UserMapper {
 }
 * @MappingTarget anotasyonu, var olan entity'yi güncellemek istediğini belirtir.
 * nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE ile null olan alanların güncellemeye dahil edilmesini önlersin.
+
+
+
+@Mapping(source = "dtoField", target = "entityField")    Entity dtoToEntity(DTO dto);
+
+@Mappings({         @Mapping(source = "dtoField1", target = "entityField1"),         @Mapping(source = "dtoField2", target = "entityField2"),         @Mapping(target = "customField", expression = "java(mapCustomField(dto.getCustomField()))")     })    Entity dtoToEntity(DTO dto);
+
+
+@Mapping(target = "email", source = "dto.email", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)void updateUserFromDto(UpdateUserDTO dto, @MappingTarget User user);
+
+mapstruct ile veri kaybı yaşamadan update yapmak

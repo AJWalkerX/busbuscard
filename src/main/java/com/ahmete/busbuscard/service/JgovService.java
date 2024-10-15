@@ -1,6 +1,7 @@
 package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.dto.request.ApplyCardRequestDto;
+import com.ahmete.busbuscard.dto.request.UpdateUserRequestDto;
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Jgov;
 import com.ahmete.busbuscard.entity.User;
@@ -23,37 +24,30 @@ public class JgovService {
     private final CardService cardService;
 
     public String apply(ApplyCardRequestDto dto) {
-        if (userService.existsByTC(dto.getTc())
+        if (userService.existsByTC(dto.tcNo())
         ) {
             throw new BusbusCardException(EErrorType.NOT_UNIQUE_TC);
         }
-        if (dto.getTitles().isEmpty() || dto.getTc().length() != 11 || dto.getGender().isEmpty() ||
-                dto.getName().isEmpty() || dto.getSurname().isEmpty()) {
+        if (dto.title().isEmpty() || dto.tcNo().length() != 11 || dto.gender().isEmpty() ||
+                dto.firstname().isEmpty() || dto.lastname().isEmpty()) {
             throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
         }
-        EGender gender = getGender(dto.getGender());
-        User user = User.builder()
-                .name(dto.getName())
-                .surname(dto.getSurname())
-                .tc(dto.getTc())
-                .gender(gender)
-                .build();
+        EGender gender = getGender(dto.gender());
+
+        User user = UserMapper.INSTANCE.fromApplyCardRequestDto(dto);
+        user.setGender(gender);
         user = userService.save(user);
         if (user.getId() == null) {
             throw new BusbusCardException(EErrorType.INTERNAL_SERVER_ERROR);
         }
 
-        ETitle title = getTitle(dto.getTitles());
+        ETitle title = getTitle(dto.title());
         Card card = cardService.generateCardByTitle(title);
         if (card.getId() == null) {
             throw new BusbusCardException(EErrorType.INTERNAL_SERVER_ERROR);
         }
-        Jgov jgov = Jgov.builder()
-                .titles(title)
-                .address(dto.getAddress())
-                .userId(user.getId())
-                .cardId(card.getId())
-                .build();
+
+        Jgov jgov = JgovMapper.INSTANCE.fromApplyCardRequestDto(dto);
         jgov.setTitles(title);
         jgovRepository.save(jgov);
         return "<h1 style=\"color: green\">Card UUID: " + card.getUuid() + " Card Type: " + card.getType() + "</h1>";
@@ -108,5 +102,9 @@ public class JgovService {
             }
             default -> throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
         }
+    }
+
+    public Jgov findByUserId(Long id) {
+       return jgovRepository.findByUserId(id);
     }
 }

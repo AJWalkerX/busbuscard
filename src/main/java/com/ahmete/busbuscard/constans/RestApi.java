@@ -20,4 +20,5 @@ public class RestApi {
     public static final String GETPAYMENTDETAIL = "/get-payment-detail";
     public static final String GETTRANSACTIONDETAIL = "/get-transaction";
     public static final String EXTENT_DATE = "/extent-date";
+    public static final String UPDATE = "/update";
 }

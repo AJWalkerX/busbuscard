@@ -24,13 +24,11 @@ public class JgovController {
 	 *
 	 */
 
-	//TODO Düzeltilmesi gerekli.
 	@PostMapping(REGISTER)
 	public ResponseEntity<String> jgovRegister(@RequestBody @Valid ApplyCardRequestDto dto) {
 		String card_uuid = jgovService.apply(dto);
-		if (!userService.existsByTC(String.valueOf(dto.getTc()))){
-			throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
-		}
 		return ResponseEntity.ok(card_uuid);
 	}
+
+
 }

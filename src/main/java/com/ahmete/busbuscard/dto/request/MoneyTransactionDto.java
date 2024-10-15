@@ -9,14 +9,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Data
-public class MoneyTransactionDto {
-    @NotNull
-    Long amount;
-    @NotNull
-    String uuid;
+
+public record MoneyTransactionDto(
+        @NotNull
+        Long amount,
+        @NotNull
+        String uuid
+
+) {
 
 }
