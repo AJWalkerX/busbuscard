@@ -16,10 +16,10 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 	
-	@ExceptionHandler(RuntimeException.class)
-	public  ResponseEntity<ErrorMessage> runtimeExceptionHandler(RuntimeException exception){
-		return createResponseEntity(EErrorType.INTERNAL_SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR,null);
-	}
+//	@ExceptionHandler(RuntimeException.class)
+//	public  ResponseEntity<ErrorMessage> runtimeExceptionHandler(RuntimeException exception){
+//		return createResponseEntity(EErrorType.INTERNAL_SERVER_ERROR,HttpStatus.INTERNAL_SERVER_ERROR,null);
+//	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseBody
