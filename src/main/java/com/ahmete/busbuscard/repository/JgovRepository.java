@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface JgovRepository extends JpaRepository<Jgov, Long> {
 
 
+    Jgov findByUserId(Long id);
 }

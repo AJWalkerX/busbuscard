@@ -25,17 +25,17 @@ public class PaymentService {
     private final CardExpirationService cardExpirationService;
 
     public String useCard(UseCardRequestDto dto) {
-        Optional<Card> optionalCard = cardService.findByUuid(dto.getCard_uuid());
+        Optional<Card> optionalCard = cardService.findByUuid(dto.card_uuid());
 
         if (optionalCard.isPresent()) {
             Card card = optionalCard.get();
             if(freeTransferIsActive(card.getId())){
-                ControlPayment(card, dto.getETransport(), 0);
+                ControlPayment(card, dto.eTransport(), 0);
                 return "UCRETSİZ AKTARMA!";
             }
-            int paymentAmount = calculatePayment(card, dto.getETransport());
+            int paymentAmount = calculatePayment(card, dto.eTransport());
             if(checkCardBalance(paymentAmount, card.getId())){
-                ControlPayment(card, dto.getETransport(), paymentAmount);
+                ControlPayment(card, dto.eTransport(), paymentAmount);
                 return "BİİİP! " + paymentAmount;
             }
            throw new BusbusCardException(EErrorType.INSUFFICIENT_BALANCE_ERROR);

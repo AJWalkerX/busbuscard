@@ -26,7 +26,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "JOIN CardExpiration ce ON ce.cardId = c.id" +
             " WHERE u.tc = :tc")
     Optional<VwUserDetail> findUserDetailByTc(String tc);
-    
-    
-    
+
 }

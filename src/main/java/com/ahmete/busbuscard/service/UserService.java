@@ -1,11 +1,13 @@
 package com.ahmete.busbuscard.service;
 
+import com.ahmete.busbuscard.dto.request.UpdateUserRequestDto;
 import com.ahmete.busbuscard.entity.User;
 import com.ahmete.busbuscard.exception.BusbusCardException;
 import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.UserRepository;
 import com.ahmete.busbuscard.views.VwUser;
 import com.ahmete.busbuscard.views.VwUserDetail;
+import com.ahmete.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,5 +54,13 @@ public class UserService {
     
     public Optional<VwUserDetail> getUserByTC(String tc) {
        return userRepository.findUserDetailByTc(tc);
+    }
+
+    public void updateUser(UpdateUserRequestDto dto) {
+        Optional<User> user = userRepository.findByTc(dto.tc());
+        if(user.isEmpty()) {
+            throw new BusbusCardException(EErrorType.USER_NOT_FOUND);
+        }
+        userRepository.save(UserMapper.INSTANCE.fromUpdateUserRequestDto(dto, user.get()));
     }
 }

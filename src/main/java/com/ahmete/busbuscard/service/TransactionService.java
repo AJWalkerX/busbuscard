@@ -26,19 +26,19 @@ public class TransactionService {
 	private final Integer MAX_TRANSACTION_LIMIT = 500;
 
 	public String addMoneyCash(MoneyTransactionDto dto) {
-			Card card = cardService.findMyCard(dto.getUuid());
+			Card card = cardService.findMyCard(dto.uuid());
 
 			if (card == null) {
 				throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
 			}
-			if(dto.getAmount()== 0){
+			if(dto.amount()== 0){
 				throw new BusbusCardException(EErrorType.TRANSACTION_INSUFFICIENT_BALANCE);
 			}
-			if(dto.getAmount()<MIN_TRANSACTION_LIMIT||dto.getAmount()>MAX_TRANSACTION_LIMIT){
+			if(dto.amount()<MIN_TRANSACTION_LIMIT||dto.amount()>MAX_TRANSACTION_LIMIT){
 				throw new BusbusCardException(EErrorType.TRANSACTION_OUT_OF_BOUNDS);
 			}
 		Transaction transaction = Transaction.builder()
-				.amount(dto.getAmount())
+				.amount(dto.amount())
 				.transactionType(ETransactionType.CASH)
 				.cardId(card.getId())
 				.build();
@@ -50,21 +50,21 @@ public class TransactionService {
 	}
 
     public String addMoneyBank(BankTransactionDto dto) {
-		Card card = cardService.findMyCard(dto.getUuid());
+		Card card = cardService.findMyCard(dto.uuid());
 		if (card == null) {
 			throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
 		}
-		if (dto.getEndYear() < Integer.parseInt(String.valueOf(LocalDate.now().getYear()))||dto.getEndMonth() < Integer.parseInt(String.valueOf(LocalDate.now().getMonthValue())) ) {
+		if (dto.endYear() < Integer.parseInt(String.valueOf(LocalDate.now().getYear()))||dto.endMonth() < Integer.parseInt(String.valueOf(LocalDate.now().getMonthValue())) ) {
 			throw new BusbusCardException(EErrorType.BANK_CARD_EXPIRY_DATE_ERROR);
 		}
-		if(dto.getAmount()==0){
+		if(dto.amount()==0){
 			throw new BusbusCardException(EErrorType.TRANSACTION_INSUFFICIENT_BALANCE);
 		}
-		if(dto.getAmount()<MIN_TRANSACTION_LIMIT||dto.getAmount()>MAX_TRANSACTION_LIMIT){
+		if(dto.amount()<MIN_TRANSACTION_LIMIT||dto.amount()>MAX_TRANSACTION_LIMIT){
 			throw new BusbusCardException(EErrorType.TRANSACTION_OUT_OF_BOUNDS);
 		}
 		Transaction transaction = Transaction.builder()
-				.amount(dto.getAmount())
+				.amount(dto.amount())
 				.transactionType(ETransactionType.BANK)
 				.cardId(card.getId())
 				.build();

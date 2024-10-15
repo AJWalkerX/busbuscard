@@ -2,6 +2,7 @@ package com.ahmete.busbuscard.controller;
 
 import static com.ahmete.busbuscard.constans.RestApi.*;
 
+import com.ahmete.busbuscard.dto.request.UpdateUserRequestDto;
 import com.ahmete.busbuscard.dto.response.BaseResponse;
 import com.ahmete.busbuscard.entity.User;
 import com.ahmete.busbuscard.service.UserService;
@@ -13,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(USER)
@@ -55,6 +54,18 @@ public class UserController {
                 .message("User detail")
                 .data(userService.getUserByTC(tc).get())
                 .build());
+    }
+    //TODO: adres güncelleme de ekle!
+    @PutMapping(UPDATE)
+    public ResponseEntity<BaseResponse<Boolean>>updateUser(@RequestBody  @Valid UpdateUserRequestDto dto){
+        userService.updateUser(dto);
+        return ResponseEntity.ok(
+                BaseResponse.<Boolean>builder()
+                        .success(true)
+                        .code(200)
+                        .message("User updated")
+                        .data(true)
+                        .build());
     }
 
 }
