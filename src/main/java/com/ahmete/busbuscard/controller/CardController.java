@@ -24,13 +24,23 @@ public class CardController {
 	private final CardService cardService;
 
 	@GetMapping(GENERATE_CARD)
-	public String generateAnonymousCard(){
-		return cardService.generateAnonymousCard();
+	public ResponseEntity<BaseResponse<String>> generateAnonymousCard(){
+		return ResponseEntity.ok(BaseResponse.<String>builder()
+				                         .success(true)
+				                         .code(200)
+				                         .message("Success")
+				                         .data(cardService.generateAnonymousCard())
+		                                     .build());
 	}
 
 	@GetMapping(SELL_CARD)
-	public String sellAnonymousCard(){
-		return cardService.sellAnonymousCard();
+	public ResponseEntity<BaseResponse<String>> sellAnonymousCard(){
+		return ResponseEntity.ok(BaseResponse.<String>builder()
+				                         .success(true)
+				                         .code(200)
+				                         .message("Success")
+				                         .data(cardService.sellAnonymousCard())
+		                                     .build());
 	}
 	
 	@GetMapping(GETCARD)

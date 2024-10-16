@@ -101,11 +101,18 @@ public class CardService {
 	}
 	
 	public Optional<VwCardDetail> getCardDetail(String cardUuid) {
-		return cardRepository.findByCardUuid(cardUuid);
+		Optional<VwCardDetail> byCardUuid = cardRepository.findByCardUuid(cardUuid);
+		if (byCardUuid.isEmpty()) {
+			throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
+		}
+		return byCardUuid;
 	}
 
 	public LocalDate extendCardDate(String cardUuid) {
 		Card myCard = findMyCard(cardUuid);
+		if (myCard == null) {
+			throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
+		}
 		CardExpiration cardExpiration = cardExpirationService.findByCardId(myCard.getId());
 		if (myCard.getType() != ECardType.STANDARD && cardExpiration.getExpirationDate() > System.currentTimeMillis()) {
 			long oneYearMillis = 365L * 24 * 60 * 60 * 1000;

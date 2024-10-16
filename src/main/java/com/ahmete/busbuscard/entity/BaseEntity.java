@@ -2,6 +2,8 @@ package com.ahmete.busbuscard.entity;
 
 import com.ahmete.busbuscard.utility.enums.EState;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +21,17 @@ import java.time.LocalDate;
 public class BaseEntity {
 	@Builder.Default
 	EState state=EState.ACTIVE;
-	@Builder.Default
-	LocalDate createAt=LocalDate.now();
-	@Builder.Default
-	LocalDate updateAt=LocalDate.now();
+	LocalDate createAt;
+	LocalDate updateAt;
+	
+	@PrePersist
+	protected void create(){
+		createAt=LocalDate.now();
+		updateAt=LocalDate.now();
+	}
+	
+	@PreUpdate
+	protected void update(){
+		updateAt=LocalDate.now();
+	}
 }

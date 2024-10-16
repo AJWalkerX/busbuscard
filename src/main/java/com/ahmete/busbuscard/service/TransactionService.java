@@ -9,8 +9,8 @@ import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.TransactionRepository;
 import com.ahmete.busbuscard.utility.enums.ETransactionType;
 import com.ahmete.busbuscard.views.VwTransactionDetail;
+import com.ahmete.busbuscard.mapper.TransactionMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -37,11 +37,9 @@ public class TransactionService {
 			if(dto.amount()<MIN_TRANSACTION_LIMIT||dto.amount()>MAX_TRANSACTION_LIMIT){
 				throw new BusbusCardException(EErrorType.TRANSACTION_OUT_OF_BOUNDS);
 			}
-		Transaction transaction = Transaction.builder()
-				.amount(dto.amount())
-				.transactionType(ETransactionType.CASH)
-				.cardId(card.getId())
-				.build();
+		Transaction transaction =
+				TransactionMapper.INSTANCE.fromMoneyTransactionDto(dto);
+			transaction.setTransactionType(ETransactionType.CASH);
 		card.setBalance(card.getBalance() + transaction.getAmount());
 		cardService.save(card);
 		transactionRepository.save(transaction);
@@ -63,11 +61,8 @@ public class TransactionService {
 		if(dto.amount()<MIN_TRANSACTION_LIMIT||dto.amount()>MAX_TRANSACTION_LIMIT){
 			throw new BusbusCardException(EErrorType.TRANSACTION_OUT_OF_BOUNDS);
 		}
-		Transaction transaction = Transaction.builder()
-				.amount(dto.amount())
-				.transactionType(ETransactionType.BANK)
-				.cardId(card.getId())
-				.build();
+		Transaction transaction = TransactionMapper.INSTANCE.fromBankTransactionDto(dto);
+		transaction.setTransactionType(ETransactionType.BANK);
 		card.setBalance(card.getBalance() + transaction.getAmount());
 		cardService.save(card);
 		transactionRepository.save(transaction);

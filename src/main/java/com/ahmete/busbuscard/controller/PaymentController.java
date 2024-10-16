@@ -23,8 +23,15 @@ public class PaymentController {
 	private final PaymentService paymentService;
 
 	@PostMapping(USE_CARD)
-	public String useCard(UseCardRequestDto dto) {
-		return paymentService.useCard(dto);
+	public ResponseEntity<BaseResponse<String>> useCard(UseCardRequestDto dto) {
+		return ResponseEntity.ok(
+				BaseResponse.<String>builder()
+						.success(true)
+						.code(200)
+						.data(paymentService.useCard(dto))
+						.message("BİİİİİİİİİİİİİİİİİİİİP")
+				            .build()
+		);
 	}
 	
 	@GetMapping(GETPAYMENTDETAIL)

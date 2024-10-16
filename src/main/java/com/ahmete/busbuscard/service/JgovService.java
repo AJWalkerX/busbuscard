@@ -1,7 +1,6 @@
 package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.dto.request.ApplyCardRequestDto;
-import com.ahmete.busbuscard.dto.request.UpdateUserRequestDto;
 import com.ahmete.busbuscard.entity.Card;
 import com.ahmete.busbuscard.entity.Jgov;
 import com.ahmete.busbuscard.entity.User;
@@ -10,8 +9,8 @@ import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.JgovRepository;
 import com.ahmete.busbuscard.utility.enums.EGender;
 import com.ahmete.busbuscard.utility.enums.ETitle;
-import com.ahmete.mapper.JgovMapper;
-import com.ahmete.mapper.UserMapper;
+import com.ahmete.busbuscard.mapper.JgovMapper;
+import com.ahmete.busbuscard.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class JgovService {
                 dto.firstname().isEmpty() || dto.lastname().isEmpty()) {
             throw new BusbusCardException(EErrorType.VALIDATION_ERROR);
         }
-        EGender gender = getGender(dto.gender());
+        EGender gender = getGender(dto.gender().toUpperCase());
 
         User user = UserMapper.INSTANCE.fromApplyCardRequestDto(dto);
         user.setGender(gender);
@@ -93,11 +92,11 @@ public class JgovService {
     }
 
     private EGender getGender(String gender) {
-        switch (gender.toLowerCase()) {
-            case "male" -> {
+        switch (gender.toUpperCase()) {
+            case "MALE" -> {
                 return EGender.MALE;
             }
-            case "female" -> {
+            case "FEMALE" -> {
                 return EGender.FEMALE;
             }
             default -> throw new BusbusCardException(EErrorType.VALIDATION_ERROR);

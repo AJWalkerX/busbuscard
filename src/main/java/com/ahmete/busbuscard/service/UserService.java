@@ -7,7 +7,7 @@ import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.UserRepository;
 import com.ahmete.busbuscard.views.VwUser;
 import com.ahmete.busbuscard.views.VwUserDetail;
-import com.ahmete.mapper.UserMapper;
+import com.ahmete.busbuscard.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

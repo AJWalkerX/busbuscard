@@ -1,4 +1,4 @@
-package com.ahmete.mapper;
+package com.ahmete.busbuscard.mapper;
 
 import com.ahmete.busbuscard.dto.request.ApplyCardRequestDto;
 import com.ahmete.busbuscard.dto.request.UpdateUserRequestDto;

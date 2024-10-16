@@ -8,6 +8,7 @@ public interface CardExpirationRepository extends JpaRepository<CardExpiration, 
 
     @Query("SELECT ce.expirationDate FROM CardExpiration ce WHERE ce.cardId = :id")
     Long getExpirationDateByCardId(Long id);
-
+    
+    @Query("SELECT ce FROM CardExpiration ce WHERE ce.cardId = :id ORDER BY ce.expirationDate DESC LIMIT 1 ")
     CardExpiration findByCardId(Long id);
 }

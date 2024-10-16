@@ -3,6 +3,7 @@ package com.ahmete.busbuscard.controller;
 import static com.ahmete.busbuscard.constans.RestApi.*;
 
 import com.ahmete.busbuscard.dto.request.ApplyCardRequestDto;
+import com.ahmete.busbuscard.dto.response.BaseResponse;
 import com.ahmete.busbuscard.exception.BusbusCardException;
 import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.service.JgovService;
@@ -25,9 +26,14 @@ public class JgovController {
 	 */
 
 	@PostMapping(REGISTER)
-	public ResponseEntity<String> jgovRegister(@RequestBody @Valid ApplyCardRequestDto dto) {
+	public ResponseEntity<BaseResponse<String>> jgovRegister(@RequestBody @Valid ApplyCardRequestDto dto) {
 		String card_uuid = jgovService.apply(dto);
-		return ResponseEntity.ok(card_uuid);
+		return ResponseEntity.ok(BaseResponse.<String>builder()
+				                         .data(card_uuid)
+				                         .code(200)
+				                         .message("Register success")
+				                         .success(true)
+		                                     .build());
 	}
 
 
