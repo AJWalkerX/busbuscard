@@ -6,6 +6,7 @@ public class RestApi {
     public static final String PAYMENT = "/payment";
     public static final String TRANSACTION = "/transaction";
     public static final String USER = "/user";
+    public static final String TRANSPORT="/transport";
 
     public static final String REGISTER = "/register";
     public static final String SEARCH = "/search";
@@ -21,4 +22,6 @@ public class RestApi {
     public static final String GETTRANSACTIONDETAIL = "/get-transaction";
     public static final String EXTENT_DATE = "/extent-date";
     public static final String UPDATE = "/update";
+    
+    public static final String GENERATE_PLATE = "/generate-plate";
 }

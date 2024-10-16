@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -15,16 +14,16 @@ import java.util.UUID;
 @SuperBuilder
 @Data
 @Entity
-@Table(name = "tbl_card")
-public class Card extends BaseEntity implements UuidGeneratable {
+@Table(name = "tbl_personel_card")
+public class PersonnelCard extends BaseEntity implements UuidGeneratable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	@Column(updatable = false, nullable = false, unique = true)
 	String uuid;
-	Long balance;
 	@Enumerated(EnumType.STRING)
-	ECardType type;
+	@Builder.Default
+	ECardType cardType=ECardType.PERSONNEL;
 	
 	
 }
