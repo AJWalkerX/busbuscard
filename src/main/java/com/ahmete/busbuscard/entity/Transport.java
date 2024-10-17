@@ -28,7 +28,7 @@ public class Transport extends BaseEntity implements PlateGeneratable {
 	@Override
 	public String generateRandomPlate() {
 		String cityCode = "34";
-		char letter = 'B';
+		char letter = 'B'; // Belediyenin B'si
 		Random random = new Random();
 		
 		int number = 1000 + random.nextInt(9000);

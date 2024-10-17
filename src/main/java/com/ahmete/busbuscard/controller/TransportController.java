@@ -26,4 +26,16 @@ public class TransportController {
 						
 		);
 	}
+	
+	@GetMapping(GENERATE_TRANSPORT)
+	public ResponseEntity<BaseResponse<Boolean>> addTransport(){
+		return  ResponseEntity.ok(
+				BaseResponse.<Boolean>builder()
+						.success(true)
+						.code(200)
+						.message("Success")
+						.data(transportService.generateTransport())
+				            .build()
+		);
+	}
 }

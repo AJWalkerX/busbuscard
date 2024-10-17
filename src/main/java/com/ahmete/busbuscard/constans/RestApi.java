@@ -24,4 +24,5 @@ public class RestApi {
     public static final String UPDATE = "/update";
     
     public static final String GENERATE_PLATE = "/generate-plate";
+    public static final String GENERATE_TRANSPORT = "/generate-transport";
 }

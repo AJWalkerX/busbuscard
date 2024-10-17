@@ -23,4 +23,11 @@ public class TransportService {
 		transportRepository.saveAll(List.of(transport,transport1,transport2,transport3));
 		return "Plaka oluşturuldu";
 	}
+	
+	//TODO DAHA SONRA BAKILACAK !!!
+	public Boolean generateTransport() {
+		Transport transport=Transport.builder().eTransport(ETransport.BUS).build();
+		transportRepository.save(transport);
+		return true;
+	}
 }
