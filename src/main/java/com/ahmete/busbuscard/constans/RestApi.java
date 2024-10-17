@@ -7,11 +7,12 @@ public class RestApi {
     public static final String TRANSACTION = "/transaction";
     public static final String USER = "/user";
     public static final String TRANSPORT="/transport";
+    public static final String PERSONNEL="/personnel";
 
     public static final String REGISTER = "/register";
     public static final String SEARCH = "/search";
     public static final String USE_CARD = "/use-card";
-    public static final String GENERATE_CARD = "/generate-card";
+
     public static final String SELL_CARD = "/sell-card";
     public static final String ADD_MONEY_CASH = "/add-money-cash";
     public static final String ADD_MONEY_BANK = "/add-money-bank";
@@ -22,7 +23,6 @@ public class RestApi {
     public static final String GETTRANSACTIONDETAIL = "/get-transaction";
     public static final String EXTENT_DATE = "/extent-date";
     public static final String UPDATE = "/update";
-    
-    public static final String GENERATE_PLATE = "/generate-plate";
-    public static final String GENERATE_TRANSPORT = "/generate-transport";
+
+    public static final String GENERATE = "/generate";
 }

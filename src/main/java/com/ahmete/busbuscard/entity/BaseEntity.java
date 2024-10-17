@@ -36,7 +36,13 @@ public class BaseEntity {
 			UuidGeneratable uuidGeneratable = (UuidGeneratable) this;
 			if (uuidGeneratable.getUuid() == null) {
 				UUID uuidHash = UUID.randomUUID();
-				uuidGeneratable.setUuid(uuidHash.toString().replace("-", "").substring(0, 16));
+				String uuidSetting = uuidHash.toString().replace("-", "").substring(0, 16);
+				if(this instanceof Card) {
+					uuidGeneratable.setUuid("JC-"+uuidSetting);
+				}
+				if(this instanceof PersonnelCard) {
+					uuidGeneratable.setUuid("PC-"+uuidSetting);
+				}
 			}
 		}
 		if (this instanceof PlateGeneratable) {

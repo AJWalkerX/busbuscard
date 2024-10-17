@@ -7,7 +7,7 @@ import com.ahmete.busbuscard.exception.BusbusCardException;
 import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.PaymentRepository;
 import com.ahmete.busbuscard.utility.enums.ECardType;
-import com.ahmete.busbuscard.utility.enums.ETransport;
+import com.ahmete.busbuscard.utility.enums.ETransportType;
 import com.ahmete.busbuscard.views.VwLatestPayment;
 import com.ahmete.busbuscard.views.VwPaymentDetail;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class PaymentService {
        throw new BusbusCardException(EErrorType.CARD_NOT_FOUND_ERROR);
     }
 
-    private int calculatePayment(Card card, ETransport eTransport) {
+    private int calculatePayment(Card card, ETransportType eTransport) {
 
         int paymentRate = (int) (BASE_VALUE * eTransport.getPaymentRate());
         int rawPaymentAmount = paymentRate + BASE_VALUE;
@@ -62,7 +62,7 @@ public class PaymentService {
         return expirationDate <= System.currentTimeMillis();
     }
 
-    private void ControlPayment(Card card, ETransport eTransport, int paymentAmount) {
+    private void ControlPayment(Card card, ETransportType eTransport, int paymentAmount) {
         if (paymentAmount == 0) {
             savePayment(paymentAmount, card.getId(), eTransport);
         }else{
@@ -72,7 +72,7 @@ public class PaymentService {
         }
 
     }
-    private void savePayment(long paymentAmount, Long cardId, ETransport eTransport) {
+    private void savePayment(long paymentAmount, Long cardId, ETransportType eTransport) {
 
         Payment payment = Payment.builder()
                 .paymentDate(System.currentTimeMillis())

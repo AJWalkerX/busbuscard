@@ -13,21 +13,8 @@ import static com.ahmete.busbuscard.constans.RestApi.*;
 @RequiredArgsConstructor
 public class TransportController {
 	private final TransportService transportService;
-	
-	@GetMapping(GENERATE_PLATE)
-	public ResponseEntity<BaseResponse<String>> generatePlate(){
-		return ResponseEntity.ok(
-				BaseResponse.<String >builder()
-						.success(true)
-						.code(200)
-						.message("Success")
-						.data(transportService.generatePlate())
-				            .build()
-						
-		);
-	}
-	
-	@GetMapping(GENERATE_TRANSPORT)
+
+	@GetMapping(GENERATE)
 	public ResponseEntity<BaseResponse<Boolean>> addTransport(){
 		return  ResponseEntity.ok(
 				BaseResponse.<Boolean>builder()
