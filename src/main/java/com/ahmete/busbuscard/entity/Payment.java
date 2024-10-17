@@ -1,11 +1,9 @@
 package com.ahmete.busbuscard.entity;
 
-import com.ahmete.busbuscard.utility.enums.ETransport;
+import com.ahmete.busbuscard.utility.enums.ETransportType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -25,5 +23,5 @@ public class Payment extends BaseEntity {
 	@Builder.Default
 	Long paymentDate = System.currentTimeMillis();
 	@Enumerated(EnumType.STRING)
-	ETransport transport;
+    ETransportType transport;
 }

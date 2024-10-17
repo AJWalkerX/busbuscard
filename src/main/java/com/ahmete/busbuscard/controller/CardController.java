@@ -4,18 +4,12 @@ import static com.ahmete.busbuscard.constans.RestApi.*;
 
 import com.ahmete.busbuscard.dto.response.BaseResponse;
 import com.ahmete.busbuscard.service.CardService;
-import com.ahmete.busbuscard.utility.enums.ETransport;
 import com.ahmete.busbuscard.views.VwCardDetail;
-import jakarta.persistence.PostLoad;
-import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping(CARD)
@@ -23,7 +17,7 @@ import java.time.LocalDate;
 public class CardController {
 	private final CardService cardService;
 
-	@GetMapping(GENERATE_CARD)
+	@GetMapping(GENERATE)
 	public ResponseEntity<BaseResponse<String>> generateAnonymousCard(){
 		return ResponseEntity.ok(BaseResponse.<String>builder()
 				                         .success(true)

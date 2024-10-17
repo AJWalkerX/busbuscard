@@ -53,7 +53,7 @@ public class Runner implements ApplicationRunner {
 //        paymentService.payTicket(Payment.builder()
 //                        .cardId(1L)
 //                        .amount(10L)
-//                        .transport(ETransport.HIGHWAY)
+//                        .transport(ETransportType.HIGHWAY)
 //                .build());
     }
 }

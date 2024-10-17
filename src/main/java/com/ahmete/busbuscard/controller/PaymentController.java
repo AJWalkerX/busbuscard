@@ -5,7 +5,6 @@ import static com.ahmete.busbuscard.constans.RestApi.*;
 import com.ahmete.busbuscard.dto.request.UseCardRequestDto;
 import com.ahmete.busbuscard.dto.response.BaseResponse;
 import com.ahmete.busbuscard.service.PaymentService;
-import com.ahmete.busbuscard.utility.enums.ETransport;
 import com.ahmete.busbuscard.views.VwPaymentDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

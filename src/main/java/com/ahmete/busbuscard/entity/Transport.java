@@ -1,7 +1,8 @@
 package com.ahmete.busbuscard.entity;
 
 import com.ahmete.busbuscard.utility.PlateGeneratable;
-import com.ahmete.busbuscard.utility.enums.ETransport;
+import com.ahmete.busbuscard.utility.enums.ETransportState;
+import com.ahmete.busbuscard.utility.enums.ETransportType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,9 +21,10 @@ public class Transport extends BaseEntity implements PlateGeneratable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	@Enumerated(EnumType.STRING)
-	ETransport eTransport;
+	ETransportType eTransport;
+	@Enumerated(EnumType.STRING)
+	ETransportState eTransportState;
 	
-	//TODO uuid gibi otomatik generatelenecek
 	String plateNo;
 	
 	@Override

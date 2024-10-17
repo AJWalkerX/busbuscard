@@ -1,6 +1,6 @@
 package com.ahmete.busbuscard.views;
 
-import com.ahmete.busbuscard.utility.enums.ETransport;
+import com.ahmete.busbuscard.utility.enums.ETransportType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,7 @@ import java.time.ZoneId;
 @Data
 public class VwPaymentDetail {
 	Long amount;
-	ETransport transport;
+	ETransportType transport;
 	Long paymentDate;
 
 	public LocalDateTime getPaymentLocalDate(Long paymentDate) {

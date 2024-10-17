@@ -20,12 +20,8 @@ public class Personnel extends BaseEntity {
 	Long id;
 	String name;
 	String surname;
-	String phone;
-	@Column(unique = true, nullable = false)
-	@Size(min = 11, max = 11)
-	String tc;
 	@Column(name="personnel_card_id")
-	String personnelCardId;
+	Long personnelCardId;
 	
 	@Enumerated(EnumType.STRING)
 	EGender gender;
