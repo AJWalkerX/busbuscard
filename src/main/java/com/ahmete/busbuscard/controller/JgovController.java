@@ -25,6 +25,7 @@ public class JgovController {
 	 *
 	 */
 
+	//TODO HATALI KAYDETME USERID CARDID GELMIYOR SADECE STUDENT KAYDEDİYOR
 	@PostMapping(REGISTER)
 	public ResponseEntity<BaseResponse<String>> jgovRegister(@RequestBody @Valid ApplyCardRequestDto dto) {
 		String card_uuid = jgovService.apply(dto);

@@ -21,6 +21,8 @@ import java.util.List;
 public class PaymentController {
 	private final PaymentService paymentService;
 
+	
+	//TODO BALANCE 0 OLMASINA RAGMEN ISLEM YAPILIYOR VE EKSİYE DUSUYO
 	@PostMapping(USE_CARD)
 	public ResponseEntity<BaseResponse<String>> useCard(UseCardRequestDto dto) {
 		return ResponseEntity.ok(

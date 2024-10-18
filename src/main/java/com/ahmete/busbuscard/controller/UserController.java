@@ -46,6 +46,7 @@ public class UserController {
                 .build());
     }
 
+    //TODO calısmıyor bakılacak
     @GetMapping(GETUSER)
     public ResponseEntity<BaseResponse<VwUserDetail>> getUserDetail(String tc) {
         return ResponseEntity.ok(BaseResponse.<VwUserDetail>builder()
