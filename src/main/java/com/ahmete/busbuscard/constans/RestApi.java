@@ -8,6 +8,7 @@ public class RestApi {
     public static final String USER = "/user";
     public static final String TRANSPORT="/transport";
     public static final String PERSONNEL="/personnel";
+    public static final String PERSONNEL_TRANSPORT="/personnel-transport";
 
     public static final String REGISTER = "/register";
     public static final String SEARCH = "/search";
