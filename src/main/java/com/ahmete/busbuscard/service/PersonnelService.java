@@ -1,15 +1,18 @@
 package com.ahmete.busbuscard.service;
 
 import com.ahmete.busbuscard.entity.Personnel;
-import com.ahmete.busbuscard.entity.PersonnelCard;
+import com.ahmete.busbuscard.exception.BusbusCardException;
+import com.ahmete.busbuscard.exception.EErrorType;
 import com.ahmete.busbuscard.repository.PersonnelRepository;
 import com.ahmete.busbuscard.utility.enums.EGender;
 import com.ahmete.busbuscard.utility.enums.EPersonnelType;
+import com.ahmete.busbuscard.views.VwPersonnel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -40,5 +43,15 @@ public class PersonnelService {
                     .build();
             personnelRepository.save(personnel);
         }
+    }
+
+    public VwPersonnel getPersonnelVw(String uuid) {
+        Long cardId = personnelCardService.findCardIdByUuid(uuid);
+        Optional<EPersonnelType> ePersonnelType = personnelRepository.getPersonnelTypeByCardId(cardId);
+        if (ePersonnelType.isEmpty()) {
+            throw new BusbusCardException(EErrorType.PERSONNEL_NOT_FOUND_ERROR);
+        }
+
+        return VwPersonnel.builder().ePersonnelType(ePersonnelType.get()).cardId(cardId).build();
     }
 }

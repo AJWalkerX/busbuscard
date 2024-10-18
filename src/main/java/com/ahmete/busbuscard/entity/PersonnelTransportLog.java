@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "tbl_personel_transport_log")
-public class PersonelTransportLog {
+public class PersonnelTransportLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	Long transportId;
-	Long personnelId;
+	Long personnelCardId;
 }

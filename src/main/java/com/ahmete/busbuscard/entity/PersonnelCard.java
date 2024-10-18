@@ -24,6 +24,4 @@ public class PersonnelCard extends BaseEntity implements UuidGeneratable {
 	@Enumerated(EnumType.STRING)
 	@Builder.Default
 	ECardType cardType=ECardType.PERSONNEL;
-	
-	
 }

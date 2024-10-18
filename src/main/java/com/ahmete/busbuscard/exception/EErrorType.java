@@ -23,7 +23,13 @@ public enum EErrorType {
 
 	BANK_CARD_EXPIRY_DATE_ERROR(6001,"Banka kart tarih hatası",HttpStatus.BAD_REQUEST),
 	TRANSACTION_INSUFFICIENT_BALANCE(6002,"Para yüklenemedi yetersiz bakiye hatası",HttpStatus.BAD_REQUEST),
-	TRANSACTION_OUT_OF_BOUNDS(6012,"Para yükleme kota aşımı hatası",HttpStatus.BAD_REQUEST);
+	TRANSACTION_OUT_OF_BOUNDS(6012,"Para yükleme kota aşımı hatası",HttpStatus.BAD_REQUEST),
+
+
+	TRANSPORT_NOT_FOUND_ERROR(7001, "Araç bulunamadı! Ulaşım aracı oluşturun", HttpStatus.BAD_REQUEST),
+
+	PERSONNEL_NOT_FOUND_ERROR(8001, "Personeller yok! Personnel atama işlemi yapınız!", HttpStatus.BAD_REQUEST),
+	WRONG_PERSONNEL_CARD_ERROR(8002, "aKü YoK BaBa?", HttpStatus.BAD_REQUEST),;
 
 
 	int code;

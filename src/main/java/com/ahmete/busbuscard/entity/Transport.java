@@ -21,10 +21,10 @@ public class Transport extends BaseEntity implements PlateGeneratable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	@Enumerated(EnumType.STRING)
-	ETransportType eTransport;
+	ETransportType eTransportType;
 	@Enumerated(EnumType.STRING)
 	ETransportState eTransportState;
-	
+	@Column(nullable = false, unique = true)
 	String plateNo;
 	
 	@Override
