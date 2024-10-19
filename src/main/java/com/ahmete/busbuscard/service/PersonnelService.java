@@ -51,7 +51,9 @@ public class PersonnelService {
         if (ePersonnelType.isEmpty()) {
             throw new BusbusCardException(EErrorType.PERSONNEL_NOT_FOUND_ERROR);
         }
-
+        if(personnelCardService.checkCardStatus(uuid)){
+            throw new BusbusCardException(EErrorType.PERSONNEL_USING_ANOTHER_TRANSPORT);
+        }
         return VwPersonnel.builder().ePersonnelType(ePersonnelType.get()).cardId(cardId).build();
     }
 }

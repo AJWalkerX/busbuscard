@@ -36,4 +36,15 @@ public class PersonnelTransportController {
                 .success(true)
                 .build());
     }
+
+    @PostMapping(USE_CARD_END)
+    public ResponseEntity<BaseResponse<String>> endShift(PersonnelTransportRequestDto dto) {
+        return ResponseEntity.ok(BaseResponse.<String>builder()
+                .message("Engine started")
+                .code(200)
+                .data(personnelTransportService.endShift(dto))
+                .success(true)
+                .build());
+    }
+
 }

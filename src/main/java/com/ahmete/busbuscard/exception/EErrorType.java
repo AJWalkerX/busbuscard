@@ -27,9 +27,14 @@ public enum EErrorType {
 
 
 	TRANSPORT_NOT_FOUND_ERROR(7001, "Araç bulunamadı! Ulaşım aracı oluşturun", HttpStatus.BAD_REQUEST),
+	TRANSPORT_ALREADY_IN_USER_ERROR(7002, "Araç başka şöför tarafından kullanılmakta!", HttpStatus.BAD_REQUEST),
 
 	PERSONNEL_NOT_FOUND_ERROR(8001, "Personeller yok! Personnel atama işlemi yapınız!", HttpStatus.BAD_REQUEST),
-	WRONG_PERSONNEL_CARD_ERROR(8002, "aKü YoK BaBa?", HttpStatus.BAD_REQUEST),;
+	WRONG_PERSONNEL_CARD_ERROR(8002, "aKü YoK BaBa?", HttpStatus.BAD_REQUEST),
+	PERSONNEL_USING_ANOTHER_TRANSPORT(8003, "Yavaş la kaç tana alıyon?", HttpStatus.BAD_REQUEST),
+
+	NO_SUCH_SHIFT_FOUND_ERROR(9001, "Böyle bir aktif şift yok!", HttpStatus.BAD_REQUEST);
+
 
 
 	int code;

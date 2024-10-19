@@ -18,4 +18,6 @@ public class PersonnelTransportLog {
 	Long id;
 	Long transportId;
 	Long personnelCardId;
+	Long startShift;
+	Long endShift;
 }

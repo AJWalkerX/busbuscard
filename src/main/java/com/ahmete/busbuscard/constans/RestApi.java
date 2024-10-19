@@ -13,6 +13,7 @@ public class RestApi {
     public static final String REGISTER = "/register";
     public static final String SEARCH = "/search";
     public static final String USE_CARD = "/use-card";
+    public static final String USE_CARD_END = "/use-card-end";
 
     public static final String SELL_CARD = "/sell-card";
     public static final String ADD_MONEY_CASH = "/add-money-cash";

@@ -1,6 +1,7 @@
 package com.ahmete.busbuscard.entity;
 
 import com.ahmete.busbuscard.utility.UuidGeneratable;
+import com.ahmete.busbuscard.utility.enums.ECardStatus;
 import com.ahmete.busbuscard.utility.enums.ECardType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,4 +25,7 @@ public class PersonnelCard extends BaseEntity implements UuidGeneratable {
 	@Enumerated(EnumType.STRING)
 	@Builder.Default
 	ECardType cardType=ECardType.PERSONNEL;
+
+	@Builder.Default
+	ECardStatus eCardStatus = ECardStatus.RESTING;
 }
