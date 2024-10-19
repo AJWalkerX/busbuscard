@@ -26,6 +26,8 @@ public class Transport extends BaseEntity implements PlateGeneratable {
 	ETransportState eTransportState;
 	@Column(nullable = false, unique = true)
 	String plateNo;
+	@Column(name = "current_stop")
+	String currentStop;
 	
 	@Override
 	public String generateRandomPlate() {

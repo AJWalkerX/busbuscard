@@ -1,5 +1,6 @@
 package com.ahmete.busbuscard.views;
 
+import com.ahmete.busbuscard.utility.enums.ETransportState;
 import com.ahmete.busbuscard.utility.enums.ETransportType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class VwTransport {
     private Long id;
     private ETransportType eTransportType;
+    private ETransportState eTransportState;
 
 
 }
